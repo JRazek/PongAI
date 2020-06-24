@@ -13,9 +13,11 @@ public class TestingModule {
         this.ball = b;
     }
     public void testAll(){
+
         for(SelfLearningModule sm : modules){
             String[] args = {Integer.toString(sm.getPaddle().getPos().getX()), Integer.toString(ball.getPos().getX())};
             rewardModule.reward(args);
+            //order ascending and take first elements specified in rules
         }
     }
 }
