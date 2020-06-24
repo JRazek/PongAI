@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'jrazek.pong'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+jar{
+    libsDirName="/home/user/IdeaProjects/Pong/build/jar/"
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
