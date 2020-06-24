@@ -1,5 +1,6 @@
 package jrazek.pong.learning;
 
+import jrazek.pong.Main;
 import jrazek.pong.Paddle;
 import jrazek.pong.Utils;
 import jrazek.pong.templates.Entity;
@@ -7,22 +8,23 @@ import jrazek.pong.templates.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelfLearningPaddle {
-    private Entity subject;
+public class SelfLearningModule {
+    private Paddle paddle;
     private List<Double> indexes = new ArrayList<>();
     private List<Double> vars;
     private int maxPower;
-    public SelfLearningPaddle(Paddle sub, List<Double> vars, int maxPower){
-        this.subject = sub;
+    public SelfLearningModule(Paddle sub, List<Double> vars, int maxPower){
+        this.paddle = sub;
         this.vars = vars;
+        this.maxPower = maxPower;
         for(int i = 0; i < vars.size() * maxPower; i ++){
             indexes.add(Utils.randomDouble());
         }
     }
-    public SelfLearningPaddle(SelfLearningPaddle p1, SelfLearningPaddle p2){
+    public SelfLearningModule(SelfLearningModule p1, SelfLearningModule p2){
         //crossing mechanisms
     }
-    public double calculation(){
+    public void moveEquation(){
         double sum = 0;
         int i = 0;
         for(Double var : vars){
@@ -33,6 +35,13 @@ public class SelfLearningPaddle {
             i++;
         }
         //random index from list. Must use all of them!!
-        return sum;
+        paddle.setVelocity(new Utils.Vector2I((int)sum, 0));
+    }
+    void kill(){
+        Main.map.getEntities().remove(paddle);
+        paddle = null;
+    }
+    public Paddle getPaddle() {
+        return paddle;
     }
 }

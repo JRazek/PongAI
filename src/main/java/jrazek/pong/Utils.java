@@ -1,5 +1,7 @@
 package jrazek.pong;
 
+import java.util.Random;
+
 public class Utils {
     public static class Vector2I{
         private int x, y;
@@ -23,12 +25,14 @@ public class Utils {
         return randomDouble(Double.MIN_VALUE, Double.MAX_VALUE);
     }
     public static double randomDouble(double min, double max){
-        return 0;
+        Random r = new Random();
+        return min + (max - min) * r.nextDouble();
     }
     public static int randomInt(){
         return randomInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
     public static int randomInt(int min, int max){
-        return 0;
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
     }
 }

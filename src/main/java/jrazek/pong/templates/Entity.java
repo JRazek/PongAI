@@ -5,18 +5,21 @@ import jrazek.pong.Utils;
 import java.awt.*;
 
 public abstract class Entity {
-    private int velocity; //velocity in x axis only
+    private Utils.Vector2I velocity;
     private Utils.Vector2I pos; //position
     private Shape shape;
     public Entity(){
-        velocity = 0;
+        velocity = new Utils.Vector2I(0,0);
         pos = new Utils.Vector2I(0,0);
     }
-    public void setVelocity(int velocity) {
+    public void setVelocity(Utils.Vector2I velocity) {
         this.velocity = velocity;
     }
     public void move(){
-        pos = new Utils.Vector2I(pos.getX() + velocity, pos.getY());
+        pos = new Utils.Vector2I(pos.getX() + velocity.getX(), pos.getY() + velocity.getY());
     }
-    public abstract void hitWall();
+    public Utils.Vector2I getPos() {
+        return pos;
+    }
+    public abstract void hitWall(boolean vertical);//boolean if true - hit in vertical wall else horizontal
 }
