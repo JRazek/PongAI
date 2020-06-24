@@ -32,7 +32,8 @@ public class SelfLearningModule {
                 sum += var * indexes.get(i);
             else
                 sum += var * indexes.get(Utils.randomInt(0, indexes.size()-1));
-            i++;
+            i++;//
+
         }
         //random index from list. Must use all of them!!
         paddle.setVelocity(new Utils.Vector2I((int)sum, 0));
