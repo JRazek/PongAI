@@ -1,4 +1,4 @@
-package jrazek.pong.learning;
+package jrazek.pong;
 
 import jrazek.pong.Utils;
 import jrazek.pong.templates.Entity;

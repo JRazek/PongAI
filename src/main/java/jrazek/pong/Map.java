@@ -5,7 +5,7 @@ import jrazek.pong.templates.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
+public class Map<D extends Number, O> {
     Utils.Vector2I size;
     private List<Entity> entities = new ArrayList<>();
     public Map(Utils.Vector2I size){
