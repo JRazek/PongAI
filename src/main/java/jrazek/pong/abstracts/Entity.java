@@ -10,6 +10,7 @@ public abstract class Entity {
     public Entity(Utils.Vector2I pos, Color cl){
         this.pos = pos;
         this.color = cl;
+        System.out.println(cl);
     }
     public abstract void draw(Graphics gp);
     public Utils.Vector2I getPos() {

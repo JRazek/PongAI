@@ -1,16 +1,15 @@
 package jrazek.pong.graphics;
 
+import jrazek.pong.abstracts.Entity;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Graphics {
-    private JFrame frame = new JFrame();
-    private JPanel panel = new JPanel();
+public class Graphics extends JPanel{
     public Graphics(){
-        frame.add(panel, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("26 need more tits");
-        frame.pack();
-        frame.setVisible(true);
+        super.repaint();
+    }
+    public void paint(java.awt.Graphics gp){
+        super.paintComponent(gp);
     }
 }

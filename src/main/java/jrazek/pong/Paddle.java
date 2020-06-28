@@ -8,15 +8,18 @@ import java.awt.geom.Rectangle2D;
 public class Paddle extends Entity {
     private Vector2I size;
     private Vector2I pos;
+    public jrazek.pong.graphics.Graphics g;
     public Paddle(Vector2I size, Vector2I pos){
         super(size, Color.BLUE);
         this.size = size;
         this.pos = pos;
     }
     public void draw(Graphics gp){
-        Graphics2D g2d= (Graphics2D)gp;
+        Graphics2D g2d = (Graphics2D)gp;
         Rectangle2D.Float rect = new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(), size.getY());
-        g2d.setColor(super.getColor());
-        g2d.fill(rect);
+
+    }
+    public jrazek.pong.graphics.Graphics getG(){
+        return g;
     }
 }
