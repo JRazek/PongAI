@@ -1,13 +1,22 @@
 package jrazek.pong;
+import jrazek.pong.Utils.*;
+import jrazek.pong.abstracts.Entity;
 
-import jrazek.pong.templates.Entity;
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Paddle extends Entity {
-    Paddle(){
-        super();
+    private Vector2I size;
+    private Vector2I pos;
+    public Paddle(Vector2I size, Vector2I pos){
+        super(size, Color.BLUE);
+        this.size = size;
+        this.pos = pos;
     }
-    @Override
-    public void hitWall(boolean vertical) {
-        setVelocity(new Utils.Vector2I(0,0));
+    public void draw(Graphics gp){
+        Graphics2D g2d= (Graphics2D)gp;
+        Rectangle2D.Float rect = new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(), size.getY());
+        g2d.setColor(super.getColor());
+        g2d.fill(rect);
     }
 }
