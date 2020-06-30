@@ -12,7 +12,7 @@ public abstract class Entity {
         this.color = cl;
         System.out.println(cl);
     }
-    public abstract void draw(Graphics gp);
+    public abstract void draw();
     public Utils.Vector2I getPos() {
         return pos;
     }

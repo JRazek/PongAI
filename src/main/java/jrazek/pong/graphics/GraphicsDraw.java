@@ -7,22 +7,22 @@ import java.util.List;
 
 public class GraphicsDraw extends JPanel{
 
-    List<Shape> shapes = new ArrayList<>();
+    List<myShape> shapes = new ArrayList<>();
 
     public void paintComponent(Graphics g){
         super.setBackground(Color.GRAY);
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
-        for(Shape s : shapes){
+        for(myShape s : shapes){
             System.out.println(shapes.size());
-            g2D.setColor(Color.BLACK);
-            g2D.draw(s);
+            g2D.setColor(s.getColor());
+            g2D.draw(s.getShape());
         }
     }
-    public void addShape(Shape s){
+    public void addShape(myShape s){
         shapes.add(s);
     }
-    public void removeShape(Shape s){
+    public void removeShape(myShape s){
         shapes.remove(s);
     }
 }
