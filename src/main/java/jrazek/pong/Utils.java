@@ -20,6 +20,24 @@ public class Utils {
             this.y = y;
         }
     }
+    public static class Vector2F{
+        private float x, y;
+        public Vector2F(float x, float y){
+            this.x = x; this.y = y;
+        }
+        public float getX() {
+            return x;
+        }
+        public float getY() {
+            return y;
+        }
+        public void setX(float x) {
+            this.x = x;
+        }
+        public void setY(float y) {
+            this.y = y;
+        }
+    }
     public static double randomDouble(){
         return randomDouble(Double.MIN_VALUE, Double.MAX_VALUE);
     }
