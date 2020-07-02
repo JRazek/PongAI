@@ -24,7 +24,10 @@ public class GraphicsDraw extends JPanel implements ActionListener {
             System.out.println(shapes.size());
             g2D.setColor(s.getColor());
             g2D.fill(s.getShape());
+            //issue us that our object moves but
+            //shape doesnt change its position.
         }
+        System.out.println("im here bruh");
     }
     public void addShape(myShape s){
         shapes.add(s);
