@@ -47,6 +47,7 @@ public abstract class Entity {
     }
     public void move(){
         pos = new Utils.Vector2F(pos.getX() + velocity.getX(), pos.getY() + velocity.getY());
+        this.shape.changePos(this.pos);
     }
     public abstract void onWallHit(boolean horizontal);//on true horizontal hit on false vertical hit
     public myShape getShape() {

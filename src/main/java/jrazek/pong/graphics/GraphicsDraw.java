@@ -16,18 +16,19 @@ public class GraphicsDraw extends JPanel implements ActionListener {
     Map map;
     List<myShape> shapes = new ArrayList<>();
 
+    @Override
     public void paintComponent(Graphics g){
         super.setBackground(Color.GRAY);
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
         for(myShape s : shapes){
-            System.out.println(shapes.size());
+            //System.out.println(shapes.size());
             g2D.setColor(s.getColor());
             g2D.fill(s.getShape());
             //issue us that our object moves but
             //shape doesnt change its position.
         }
-        System.out.println("im here bruh");
+        //System.out.println("im here bruh");
     }
     public void addShape(myShape s){
         shapes.add(s);
@@ -38,13 +39,13 @@ public class GraphicsDraw extends JPanel implements ActionListener {
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(1000/20,this);
+        timer = new Timer(1,this);
         timer.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println(ticks);
+        //System.out.println(ticks);
         ticks++;
         map.step();
         repaint();

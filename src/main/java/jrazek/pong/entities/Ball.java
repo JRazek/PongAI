@@ -26,6 +26,10 @@ public class Ball extends Entity {
 
     @Override
     public void onWallHit(boolean horizontal) {
-
+        Utils.Vector2F v = super.getVelocity();
+        if(horizontal)
+            super.setVelocity(new Utils.Vector2F(-v.getX(), v.getY()));
+        else
+            super.setVelocity(new Utils.Vector2F(v.getX(), -v.getY()));
     }
 }

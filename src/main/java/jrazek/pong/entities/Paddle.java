@@ -26,6 +26,10 @@ public class Paddle extends Entity {
 
     @Override
     public void onWallHit(boolean horizontal) {
-
+        Vector2F v = super.getVelocity();
+        if(horizontal)
+            super.setVelocity(new Vector2F(-v.getX(), v.getY()));
+        else
+            super.setVelocity(new Vector2F(v.getX(), -v.getY()));
     }
 }

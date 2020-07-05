@@ -1,4 +1,6 @@
 package jrazek.pong;
+import java.awt.*;
+import java.lang.reflect.Type;
 import java.util.Random;
 
 public class Utils {
