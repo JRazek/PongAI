@@ -3,17 +3,21 @@ package jrazek.pong.abstracts;
 import jrazek.pong.Main;
 import jrazek.pong.Map;
 import jrazek.pong.Utils;
+import jrazek.pong.entities.Ball;
 import jrazek.pong.graphics.myShape;
 
-public abstract class Entity {
+public abstract class Entity extends DrawableObject<Ball> {
     private Utils.Vector2F pos;
     private myShape shape;
     private Utils.Vector2F velocity = new Utils.Vector2F(0,0);
     private Map map;
-    public Entity(Utils.Vector2F pos){
+    public Entity(Utils.Vector2F pos, myShape s){
+        super(s);
+
         this.pos = pos;
     }
-    public Entity(Utils.Vector2F pos, Map map){
+    public Entity(Utils.Vector2F pos, myShape s, Map map){
+        super(s);
         this.pos = pos;
         setMap(map);
     }

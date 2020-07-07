@@ -63,5 +63,7 @@ public class Map {
             entity.move();
         }
     }
-
+    boolean isColliding(myShape s1, myShape s2){
+        return false;
+    }
 }

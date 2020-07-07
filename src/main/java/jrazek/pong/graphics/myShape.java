@@ -11,10 +11,12 @@ public class myShape {
     private Shape shape;
     private Color color;
     private boolean filled;
+    private Utils.Vector2F size;
     public myShape(Shape s, Color cl, boolean f){
         this.shape = s;
         this.color = cl;
         this .filled = f;
+        this.size = new Utils.Vector2F(shape.getBounds().height, shape.getBounds().height);
     }
     public void changePos(Utils.Vector2F pos){
         if(shape.getClass().equals(Rectangle2D.Float.class)){
@@ -23,6 +25,9 @@ public class myShape {
         if(shape.getClass().equals(Ellipse2D.Float.class)){
             shape = new Ellipse2D.Float(pos.getX(), pos.getY(), (float)shape.getBounds2D().getWidth(), (float)shape.getBounds2D().getHeight());
         }
+    }
+    public Utils.Vector2F getSize(){
+        return size;
     }
     public Color getColor() {
         return color;
