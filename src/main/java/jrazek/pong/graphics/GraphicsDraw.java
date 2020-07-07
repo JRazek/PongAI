@@ -11,16 +11,22 @@ import java.util.List;
 
 public class GraphicsDraw extends JPanel implements ActionListener {
 
-    Timer timer;
-    int ticks = 0;
-    Map map;
-    List<myShape> shapes = new ArrayList<>();
-
+    private Timer timer;
+    private int ticks = 0;
+    private Map map;
+    private List<myShape> shapes = new ArrayList<>();
+    boolean isLinux;
+    GraphicsDraw(){
+        if(System.getProperty("os.name").equalsIgnoreCase("linux"))
+            isLinux = true;
+    }
     @Override
     public void paintComponent(Graphics g){
         super.setBackground(Color.GRAY);
         super.paintComponent(g);
         Graphics2D g2D = (Graphics2D)g;
+        if(isLinux)
+            Toolkit.getDefaultToolkit().sync();
         for(myShape s : shapes){
             //System.out.println(shapes.size());
             g2D.setColor(s.getColor());
@@ -45,7 +51,6 @@ public class GraphicsDraw extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //System.out.println(ticks);
         ticks++;
         map.step();
         repaint();

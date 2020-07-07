@@ -19,14 +19,22 @@ public class Map {
         this.frame = frame;
     }
     public void addBall(Ball ball) {
+        addPrivateEntity(ball);
         this.balls.add(ball);
     }
-    public void addPaddles(Paddle paddle) {
+    public void addPaddle(Paddle paddle) {
+        addPrivateEntity(paddle);
         this.paddles.add(paddle);
     }
+    public void killEntity(Entity e){
+        balls.remove(e);
+        paddles.remove(e);
+        entities.remove(e);
+    }
 
-    public void addEntity(Entity e){
+    private void addPrivateEntity(Entity e) {
         this.entities.add(e);
+        frame.getGraphicsDraw().addShape(e.getShape());
     }
     public Frame getFrame() {
         return frame;

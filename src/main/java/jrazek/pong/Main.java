@@ -20,10 +20,8 @@ public class Main {
 
         paddles.get(0).setMap(map);
         paddles.get(0).setVelocity(new Utils.Vector2F(2,0));
-        paddles.get(0).addToDrawList();
 
         ball.setVelocity(new Utils.Vector2F(2,1));
         ball.setMap(map);
-        ball.addToDrawList();
     }
 }

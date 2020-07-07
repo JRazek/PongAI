@@ -15,12 +15,9 @@ public abstract class Entity {
     }
     public Entity(Utils.Vector2F pos, Map map){
         this.pos = pos;
-        this.map = map;
+        setMap(map);
     }
-    public void addToDrawList(){
-        map.addEntity(this);
-        map.getFrame().getGraphicsDraw().addShape(shape);
-    }
+    public abstract void addToMap();
     public void removeFromDrawList(){
         Main.frame.getGraphicsDraw().removeShape(shape);
     }
@@ -41,6 +38,7 @@ public abstract class Entity {
     }
     public void setMap(Map map) {
         this.map = map;
+        addToMap();
     }
     public Map getMap() {
         return map;
@@ -52,5 +50,8 @@ public abstract class Entity {
     public abstract void onWallHit(boolean horizontal);//on true horizontal hit on false vertical hit
     public myShape getShape() {
         return shape;
+    }
+    public void kill(){
+
     }
 }
