@@ -10,9 +10,11 @@ import java.lang.reflect.Constructor;
 public class myShape {
     private Shape shape;
     private Color color;
-    public myShape(Shape s, Color cl){
+    private boolean filled;
+    public myShape(Shape s, Color cl, boolean f){
         this.shape = s;
         this.color = cl;
+        this .filled = f;
     }
     public void changePos(Utils.Vector2F pos){
         if(shape.getClass().equals(Rectangle2D.Float.class)){
@@ -25,15 +27,15 @@ public class myShape {
     public Color getColor() {
         return color;
     }
-
+    public boolean isFilled() {
+        return filled;
+    }
     public Shape getShape() {
         return shape;
     }
-
     public void setColor(Color color) {
         this.color = color;
     }
-
     public void setShape(Shape shape) {
         this.shape = shape;
     }

@@ -27,10 +27,14 @@ public class GraphicsDraw extends JPanel implements ActionListener {
         Graphics2D g2D = (Graphics2D)g;
         if(isLinux)
             Toolkit.getDefaultToolkit().sync();
+
         for(myShape s : shapes){
             //System.out.println(shapes.size());
             g2D.setColor(s.getColor());
-            g2D.fill(s.getShape());
+            if(s.isFilled())
+                g2D.fill(s.getShape());
+            else
+                g2D.draw(s.getShape());
             //issue us that our object moves but
             //shape doesnt change its position.
         }

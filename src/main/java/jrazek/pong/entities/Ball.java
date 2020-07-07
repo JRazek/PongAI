@@ -15,13 +15,13 @@ public class Ball extends Entity {
         super(pos);
         this.radius = radius;
         this.pos = pos;
-        super.setShape(new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED));
+        super.setShape(new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED, true));
     }
     public Ball(float radius, Utils.Vector2F pos, Map map){
         super(pos, map);
         this.radius = radius;
         this.pos = pos;
-        super.setShape(new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED));
+        super.setShape(new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED, true));
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Ball extends Entity {
     }
 
     @Override
-    public void onWallHit(boolean horizontal) {
+    public void onCollision(boolean horizontal) {
         Utils.Vector2F v = super.getVelocity();
         if(horizontal)
             super.setVelocity(new Utils.Vector2F(-v.getX(), v.getY()));
