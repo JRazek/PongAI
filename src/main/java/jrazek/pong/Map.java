@@ -1,5 +1,6 @@
 package jrazek.pong;
 
+import jrazek.pong.abstracts.DrawableObject;
 import jrazek.pong.abstracts.Entity;
 import jrazek.pong.entities.Ball;
 import jrazek.pong.entities.Paddle;
@@ -11,18 +12,17 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Map {
+public class Map extends DrawableObject {
     private Utils.Vector2I size;
     private Frame frame;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
-    private myShape shape;
     public Map(Utils.Vector2I size, Frame frame){
+        super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0));
         this.size = size;
         this.frame = frame;
-        shape = new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false);
-        frame.getGraphicsDraw().addShape(shape);
+        frame.getGraphicsDraw().addDrawable(this);
     }
     public void addBall(Ball ball) {
         addPrivateEntity(ball);
@@ -40,12 +40,13 @@ public class Map {
 
     private void addPrivateEntity(Entity e) {
         this.entities.add(e);
-        frame.getGraphicsDraw().addShape(e.getShape());
     }
 
-    public myShape getShape() {
-        return shape;
+    @Override
+    public boolean isColliding(DrawableObject po) {
+        return false;
     }
+
     public Frame getFrame() {
         return frame;
     }
@@ -53,6 +54,7 @@ public class Map {
         return size;
     }
     public void step(){
+
         for(Entity entity : entities){
             if(entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                 entity.onCollision(true);

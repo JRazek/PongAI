@@ -1,17 +1,35 @@
 package jrazek.pong.abstracts;
 
 import jrazek.pong.Utils;
+import jrazek.pong.graphics.Frame;
 import jrazek.pong.graphics.myShape;
 
 //abstract object with no specified position
-public abstract class DrawableObject<V> {
+public abstract class DrawableObject {
     private Utils.Vector2F pos;
+    private Frame frame;
 
     //all shapes have rectangular bounding boxes
     private myShape shape;
     public abstract boolean isColliding(DrawableObject po);
-    public DrawableObject(myShape shape){
+    public DrawableObject(Frame frame, myShape shape, Utils.Vector2F pos){
         this.shape = shape;
+        this.frame = frame;
+        this.pos = pos;
+        addToDrawList();
     }
-    public abstract void draw(V v);
+    public void addToDrawList(){
+        frame.getGraphicsDraw().addDrawable(this);
+    }
+    public void setPos(Utils.Vector2F p){
+        this.pos = p;
+    }
+
+    public Utils.Vector2F getPos() {
+        return pos;
+    }
+
+    public myShape getShape() {
+        return shape;
+    }
 }

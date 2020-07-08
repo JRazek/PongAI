@@ -1,6 +1,7 @@
 package jrazek.pong.graphics;
 
 import jrazek.pong.Map;
+import jrazek.pong.abstracts.DrawableObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +14,8 @@ public class GraphicsDraw extends JPanel implements ActionListener {
 
     private Timer timer;
     private int ticks = 0;
-    private Map map;
-    private List<myShape> shapes = new ArrayList<>();
+    private Map map;//only for incrementing step
+    private List<DrawableObject> drawableObjects = new ArrayList<>();
     boolean isLinux;
     GraphicsDraw(){
         if(System.getProperty("os.name").equalsIgnoreCase("linux"))
@@ -28,23 +29,25 @@ public class GraphicsDraw extends JPanel implements ActionListener {
         if(isLinux)
             Toolkit.getDefaultToolkit().sync();
 
-        for(myShape s : shapes){
-            //System.out.println(shapes.size());
+        for(DrawableObject o : drawableObjects){
+            myShape s = o.getShape();
             g2D.setColor(s.getColor());
-            if(s.isFilled())
+            if(s.isFilled()) {
                 g2D.fill(s.getShape());
-            else
+            }
+            else {
                 g2D.draw(s.getShape());
+            }
             //issue us that our object moves but
             //shape doesnt change its position.
         }
         //System.out.println("im here bruh");
     }
-    public void addShape(myShape s){
-        shapes.add(s);
+    public void addDrawable(DrawableObject o){
+        drawableObjects.add(o);
     }
-    public void removeShape(myShape s){
-        shapes.remove(s);
+    public void removeDrawable(DrawableObject o){
+        drawableObjects.remove(o);
     }
 
     public void setMap(Map map) {
