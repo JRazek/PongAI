@@ -53,19 +53,18 @@ public class Map extends DrawableObject {
     public Utils.Vector2I getSize() {
         return size;
     }
-    public void step(){
+    public void step() {
 
-        for(Entity entity : entities){
-            if(entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
+        for (Entity entity : entities) {
+            if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                 entity.onCollision(true);
             }
-            if(entity.getPos().getY() <= 0 || entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
+            if (entity.getPos().getY() <= 0 || entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
                 entity.onCollision(false);
             }
             entity.move();
         }
     }
-    //do nothing
     boolean isColliding(myShape s1, myShape s2){
         return false;
     }
