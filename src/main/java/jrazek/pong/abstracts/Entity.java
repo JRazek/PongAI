@@ -40,4 +40,13 @@ public abstract class Entity extends DrawableObject {
     public void kill(){
 
     }
+
+    @Override
+    public boolean isColliding(DrawableObject o) {
+        Utils.Vector2F p1 = new Utils.Vector2F(o.getPos().getX(), o.getPos().getY());
+        Utils.Vector2F p2 = new Utils.Vector2F(o.getPos().getX() + o.getShape().getSize().getX(), o.getPos().getY());
+        Utils.Vector2F p3 = new Utils.Vector2F(o.getPos().getX() + o.getShape().getSize().getX(), o.getPos().getY() + o.getShape().getSize().getY());
+        Utils.Vector2F p4 = new Utils.Vector2F(o.getPos().getX(), o.getPos().getY() + o.getShape().getSize().getY());
+        return (o.pointBelongs(p1) || o.pointBelongs(p2) || o.pointBelongs(p3) || o.pointBelongs(p4));
+    }
 }

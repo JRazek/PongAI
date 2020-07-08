@@ -32,10 +32,4 @@ public class Paddle extends Entity {
             super.setVelocity(new Vector2F(v.getX(), -v.getY()));
     }
 
-    @Override
-    public boolean isColliding(DrawableObject po) {
-        return false;
-    }
-
-
 }

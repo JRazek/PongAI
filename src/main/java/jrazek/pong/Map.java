@@ -62,10 +62,15 @@ public class Map extends DrawableObject {
             if (entity.getPos().getY() <= 0 || entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
                 entity.onCollision(false);
             }
+            for(Entity collider : entities){
+                if(!entity.equals(collider))
+                    if(entity.isColliding(collider))
+                        entity.setVelocity(new Utils.Vector2F(0,0));
+            }
             entity.move();
         }
     }
-    boolean isColliding(myShape s1, myShape s2){
-        return false;
+    boolean isColliding(DrawableObject o1, DrawableObject o2){
+        return (o1.isColliding(o2));
     }
 }

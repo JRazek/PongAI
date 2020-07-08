@@ -29,6 +29,13 @@ public abstract class DrawableObject {
         return pos;
     }
 
+
+    public boolean pointBelongs(Utils.Vector2F point){
+        boolean state = (pos.getX() <= point.getX() && pos.getX() + shape.getSize().getX() >= point.getX()
+                && pos.getY() <= point.getY() && pos.getY() + shape.getSize().getY() >= point.getY());
+        System.out.println(state);
+        return state;
+    }
     public myShape getShape() {
         return shape;
     }

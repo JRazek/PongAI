@@ -33,8 +33,4 @@ public class Ball extends Entity {
             super.setVelocity(new Utils.Vector2F(v.getX(), -v.getY()));
     }
 
-    @Override
-    public boolean isColliding(DrawableObject po) {
-        return false;
-    }
 }
