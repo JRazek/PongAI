@@ -65,6 +65,7 @@ public class Map extends DrawableObject {
             entity.move();
         }
     }
+    //do nothing
     boolean isColliding(myShape s1, myShape s2){
         return false;
     }
