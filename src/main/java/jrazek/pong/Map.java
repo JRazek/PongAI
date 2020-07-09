@@ -55,6 +55,12 @@ public class Map extends DrawableObject {
     }
     public void step() {
         for (Entity entity : entities) {
+            entity.move();
+        }
+        checkCollisions();
+    }
+    private void checkCollisions(){
+        for (Entity entity : entities) {
             if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                 entity.onCollision(true);
             }
@@ -71,7 +77,6 @@ public class Map extends DrawableObject {
 
                     }
             }
-            entity.move();
         }
     }
     //returns the position of the ending position
@@ -82,5 +87,17 @@ public class Map extends DrawableObject {
         float vy = velocity.getY();
         //iteracja po wektorze
         return null;
+    }
+    public void foreachAllEntityData(){
+        for(Entity e : entities){
+            System.out.println("------------------------");
+            System.out.println(e.getClass().toString());
+            System.out.println("x = " + e.getPos().getX());
+            System.out.println("y = " + e.getPos().getY());
+            System.out.println("Vx = " + e.getVelocity().getX());
+            System.out.println("Vy = " + e.getVelocity().getY());
+            System.out.println("Sx = " + e.getShape().getSize().getX());
+            System.out.println("Sy = " + e.getShape().getSize().getY());
+        }
     }
 }
