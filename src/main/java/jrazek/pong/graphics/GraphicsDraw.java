@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,10 +39,7 @@ public class GraphicsDraw extends JPanel implements ActionListener {
             else {
                 g2D.draw(s.getShape());
             }
-            //issue us that our object moves but
-            //shape doesnt change its position.
         }
-        //System.out.println("im here bruh");
     }
     public void addDrawable(DrawableObject o){
         drawableObjects.add(o);
@@ -52,7 +50,7 @@ public class GraphicsDraw extends JPanel implements ActionListener {
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(1,this);
+        timer = new Timer(5,this);
         timer.start();
     }
 
@@ -61,5 +59,8 @@ public class GraphicsDraw extends JPanel implements ActionListener {
         ticks++;
         map.step();
         repaint();
+    }
+    public void stop(){
+        timer.stop();
     }
 }

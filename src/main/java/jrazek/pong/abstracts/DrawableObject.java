@@ -8,14 +8,15 @@ import jrazek.pong.graphics.myShape;
 public abstract class DrawableObject {
     private Utils.Vector2F pos;
     private Frame frame;
-
+    public boolean collidable;
     //all shapes have rectangular bounding boxes
     private myShape shape;
     public abstract boolean isColliding(DrawableObject po);
-    public DrawableObject(Frame frame, myShape shape, Utils.Vector2F pos){
+    public DrawableObject(Frame frame, myShape shape, Utils.Vector2F pos, boolean collidable){
         this.shape = shape;
         this.frame = frame;
         this.pos = pos;
+        this.collidable = collidable;
         addToDrawList();
     }
     public void addToDrawList(){
@@ -32,8 +33,7 @@ public abstract class DrawableObject {
 
     public boolean pointBelongs(Utils.Vector2F point){
         boolean state = (pos.getX() <= point.getX() && pos.getX() + shape.getSize().getX() >= point.getX()
-                && pos.getY() <= point.getY() && pos.getY() + shape.getSize().getY() >= point.getY());
-        System.out.println(state);
+            && pos.getY() <= point.getY() && pos.getY() + shape.getSize().getY() >= point.getY());
         return state;
     }
     public myShape getShape() {

@@ -21,6 +21,10 @@ public class Utils {
         public void setY(int y) {
             this.y = y;
         }
+        public void add(Vector2I adder){
+            x = x + adder.getX();
+            y = y + adder.getY();
+        }
     }
     public static class Vector2F{
         private float x, y;
@@ -38,6 +42,10 @@ public class Utils {
         }
         public void setY(float y) {
             this.y = y;
+        }
+        public void add(Vector2F adder){
+            x = x + adder.getX();
+            y = y + adder.getY();
         }
     }
     public static double randomDouble(){

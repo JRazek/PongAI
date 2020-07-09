@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static List<Paddle> paddles = new ArrayList<>();
-    public static Frame frame = new Frame();
-    public static Map map = new Map(new Utils.Vector2I(1000,1000), frame);
+    private static Frame frame = new Frame();
+    private static Map map = new Map(new Utils.Vector2I(1000,1000), frame);
 
     public static void main(String []str){
         frame.setMap(map);
+
+        Paddle paddle = new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F(200, 900), map, frame);
+        Utils.Vector2F rand1 = new Utils.Vector2F(5,4);
+        paddle.setVelocity(rand1);
+
         Ball ball = new Ball(60, new Utils.Vector2F(100, 100), map, frame);
-
-        paddles.add(new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F(200, 900), map, frame));
-        paddles.get(0).setVelocity(new Utils.Vector2F(2,0));
-
-        ball.setVelocity(new Utils.Vector2F(2,1));
-        ball.setMap(map);
+        Utils.Vector2F rand2 = new Utils.Vector2F(0,4);
+        ball.setVelocity(rand2);
     }
 }

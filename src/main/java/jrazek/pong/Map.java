@@ -19,7 +19,7 @@ public class Map extends DrawableObject {
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
     public Map(Utils.Vector2I size, Frame frame){
-        super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0));
+        super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0), false);
         this.size = size;
         this.frame = frame;
         frame.getGraphicsDraw().addDrawable(this);
@@ -29,8 +29,8 @@ public class Map extends DrawableObject {
         this.balls.add(ball);
     }
     public void addPaddle(Paddle paddle) {
-        addPrivateEntity(paddle);
-        this.paddles.add(paddle);
+            addPrivateEntity(paddle);
+            this.paddles.add(paddle);
     }
     public void killEntity(Entity e){
         balls.remove(e);
@@ -54,7 +54,6 @@ public class Map extends DrawableObject {
         return size;
     }
     public void step() {
-
         for (Entity entity : entities) {
             if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                 entity.onCollision(true);
@@ -64,13 +63,24 @@ public class Map extends DrawableObject {
             }
             for(Entity collider : entities){
                 if(!entity.equals(collider))
-                    if(entity.isColliding(collider))
+                    if(entity.isColliding(collider)) {
+                        System.out.println("Collision");
                         entity.setVelocity(new Utils.Vector2F(0,0));
+                        frame.stop();
+                    }else{
+
+                    }
             }
             entity.move();
         }
     }
-    boolean isColliding(DrawableObject o1, DrawableObject o2){
-        return (o1.isColliding(o2));
+    //returns the position of the ending position
+    public Utils.Vector2F rayTraceVector(Utils.Vector2F startPos, Utils.Vector2F velocity){
+        float x = startPos.getX();
+        float y = startPos.getY();
+        float vx = velocity.getX();
+        float vy = velocity.getY();
+        //iteracja po wektorze
+        return null;
     }
 }

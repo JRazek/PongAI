@@ -20,7 +20,9 @@ public class Frame extends JFrame {
         super.setSize(map.getSize().getX(), map.getSize().getY());
         graphicsDraw.setMap(this.map);
     }
-
+    public void stop(){
+        getGraphicsDraw().stop();
+    }
     public GraphicsDraw getGraphicsDraw() {
         return graphicsDraw;
     }
