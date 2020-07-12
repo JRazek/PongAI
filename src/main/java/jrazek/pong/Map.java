@@ -59,7 +59,7 @@ public class Map extends DrawableObject {
         }
         checkCollisions();
     }
-    private void checkCollisions(){
+    public void checkCollisions(){
         for (Entity entity : entities) {
             if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                 entity.onCollision(true);
@@ -70,11 +70,9 @@ public class Map extends DrawableObject {
             for(Entity collider : entities){
                 if(!entity.equals(collider))
                     if(entity.isColliding(collider)) {
-                        System.out.println("Collision");
-                        entity.setVelocity(new Utils.Vector2F(0,0));
-                        frame.stop();
-                    }else{
-
+                        if(!entity.isSolid()){
+                            entity.onCollision(false);
+                        }
                     }
             }
         }
@@ -85,6 +83,16 @@ public class Map extends DrawableObject {
         float y = startPos.getY();
         float vx = velocity.getX();
         float vy = velocity.getY();
+
+        float squaredExpectedDistance = vx * vx + vy * vy;
+
+
+        float m = 0;
+        float delta = Rules.rayTraceResolution;
+        while(m*m < squaredExpectedDistance){
+            m += delta;
+            float hSquared = (m*m*vx*vx)/(vx*vx+vy*vy);
+        }
         //iteracja po wektorze
         return null;
     }

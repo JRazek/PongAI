@@ -14,11 +14,13 @@ public class MouseListener implements java.awt.event.MouseListener {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         System.out.println("MOUSE CLICKED");
-        frame.getGraphicsDraw().toggleTimer();
+       // frame.getGraphicsDraw().toggleTimer();
+        map.checkCollisions();
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
+        System.out.println("MOUSE CLICKED");
 
     }
 

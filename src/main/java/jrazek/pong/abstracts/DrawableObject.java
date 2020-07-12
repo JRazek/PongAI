@@ -9,6 +9,7 @@ public abstract class DrawableObject {
     private Utils.Vector2F pos;
     private Frame frame;
     public boolean collidable;
+    public boolean solid;
     //all shapes have rectangular bounding boxes
     private myShape shape;
     public abstract boolean isColliding(DrawableObject po);
@@ -18,6 +19,10 @@ public abstract class DrawableObject {
         this.pos = pos;
         this.collidable = collidable;
         addToDrawList();
+    }
+    public DrawableObject(Frame frame, myShape shape, Utils.Vector2F pos, boolean collidable, boolean solid){
+        this(frame, shape, pos, collidable);
+        this.solid = solid;
     }
     public void addToDrawList(){
         frame.getGraphicsDraw().addDrawable(this);
@@ -32,12 +37,15 @@ public abstract class DrawableObject {
 
 
     public boolean pointBelongs(Utils.Vector2F point){
-        boolean state = (pos.getX() <= point.getX() && pos.getX() + shape.getSize().getX() >= point.getX()
+        return (pos.getX() <= point.getX() && pos.getX() + shape.getSize().getX() >= point.getX()
                      &&  pos.getY() <= point.getY() && pos.getY() + shape.getSize().getY() >= point.getY()
         );
-        return state;
     }
     public myShape getShape() {
         return shape;
+    }
+
+    public boolean isSolid() {
+        return solid;
     }
 }

@@ -14,6 +14,10 @@ public abstract class Entity extends DrawableObject {
         super(f, s, pos, true);
         setMap(map);
     }
+    public Entity(Utils.Vector2F pos, myShape s, boolean solid, Map map, Frame f){
+        super(f, s, pos, true, solid);
+        setMap(map);
+    }
     public abstract void addToMap();
     public void setVelocity(Utils.Vector2F velocity) {
         this.velocity = velocity;
@@ -44,18 +48,6 @@ public abstract class Entity extends DrawableObject {
 
     @Override
     public boolean isColliding(DrawableObject o) {
-        Utils.Vector2F p1 = new Utils.Vector2F(getPos().getX(), getPos().getY());
-        Utils.Vector2F p2 = new Utils.Vector2F(getPos().getX() + getShape().getSize().getX(), getPos().getY());
-        Utils.Vector2F p3 = new Utils.Vector2F(getPos().getX() + getShape().getSize().getX(), getPos().getY() + getShape().getSize().getY());
-        Utils.Vector2F p4 = new Utils.Vector2F(getPos().getX(), getPos().getY() + getShape().getSize().getY());
-        boolean s1 = o.pointBelongs(p1);
-        boolean s2 = o.pointBelongs(p2);
-        boolean s3 = o.pointBelongs(p3);
-        boolean s4 = o.pointBelongs(p4);
-        System.out.println("s1 - " + s1);
-        System.out.println("s2 - " + s2);
-        System.out.println("s3 - " + s3);
-        System.out.println("s4 - " + s4);
-        return (s1 || s1 || s3 || s4);
+        return o.getShape().getShape().intersects(this.getShape().getShape().getBounds2D());
     }
 }

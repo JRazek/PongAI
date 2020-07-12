@@ -13,7 +13,7 @@ public class Paddle extends Entity {
     private Vector2F size;
     private Vector2F pos;
     public Paddle(Vector2F size, Vector2F pos, Map map, Frame f){
-        super(pos, new myShape(new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(),size.getY()), Color.BLUE, true), map, f);
+        super(pos, new myShape(new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(),size.getY()), Color.BLUE, true), true, map, f);
         this.size = size;
         this.pos = pos;
     }
