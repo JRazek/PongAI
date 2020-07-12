@@ -56,17 +56,24 @@ public class Map extends DrawableObject {
     public void step() {
         for (Entity entity : entities) {
             entity.move();
+            checkCollisions(entity);
         }
-        checkCollisions();
     }
-    public void checkCollisions(){
-        for (Entity entity : entities) {
+    public void checkCollisions(Entity entity){
+        if(entity.isColliding(this)) {
             if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
-                entity.onCollision(true);
+                if(entity.isSolid())
+                    entity.setVelocity(new Utils.Vector2F(0,0));
+                else
+                    entity.onCollision(true);
             }
             if (entity.getPos().getY() <= 0 || entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
-                entity.onCollision(false);
+                if(entity.isSolid())
+                    entity.setVelocity(new Utils.Vector2F(0,0));
+                else
+                    entity.onCollision(false);
             }
+        }
             for(Entity collider : entities){
                 if(!entity.equals(collider))
                     if(entity.isColliding(collider)) {
@@ -75,7 +82,6 @@ public class Map extends DrawableObject {
                         }
                     }
             }
-        }
     }
     //returns the position of the ending position
     public Utils.Vector2F rayTraceVector(Utils.Vector2F startPos, Utils.Vector2F velocity){
