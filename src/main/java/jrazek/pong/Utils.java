@@ -62,4 +62,21 @@ public class Utils {
         Random rand = new Random();
         return rand.nextInt((max - min) + 1) + min;
     }
+    public static boolean randomBoolean(){
+        Random rand = new Random();
+        return rand.nextBoolean();
+    }
+    public static class Domain{
+        float min, max;
+        public Domain(float min, float max){
+            this.min = min;
+            this.max = max;
+        }
+        public float getMin() {
+            return min;
+        }
+        public float getMax() {
+            return max;
+        }
+    }
 }
