@@ -1,8 +1,6 @@
 package jrazek.pong.graphics;
 
-import jrazek.pong.Main;
 import jrazek.pong.Map;
-import jrazek.pong.Utils;
 
 import java.awt.event.MouseEvent;
 

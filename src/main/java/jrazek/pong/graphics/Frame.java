@@ -5,8 +5,8 @@ import jrazek.pong.Map;
 import javax.swing.*;
 public class Frame extends JFrame {
 
-    GraphicsDraw graphicsDraw = new GraphicsDraw();
-    Map map;
+    private GraphicsDraw graphicsDraw = new GraphicsDraw();
+    private Map map;
     public Frame(){
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setTitle("26 need more tits");

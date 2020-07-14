@@ -1,11 +1,10 @@
 package jrazek.pong.graphics;
 
-import jrazek.pong.Utils;
+import jrazek.pong.Utils.Utils;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Constructor;
 
 public class myShape {
     private Shape shape;
@@ -16,7 +15,7 @@ public class myShape {
         this.shape = s;
         this.color = cl;
         this .filled = f;
-        this.size = new Utils.Vector2F(shape.getBounds().height, shape.getBounds().height);
+        this.size = new Utils.Vector2F((float)shape.getBounds().getHeight(), (float)shape.getBounds().getWidth());
     }
     public void changePos(Utils.Vector2F pos){
         if(shape.getClass().equals(Rectangle2D.Float.class)){

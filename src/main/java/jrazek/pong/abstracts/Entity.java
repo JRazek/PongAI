@@ -1,9 +1,7 @@
 package jrazek.pong.abstracts;
 
-import jrazek.pong.Main;
 import jrazek.pong.Map;
-import jrazek.pong.Utils;
-import jrazek.pong.entities.Ball;
+import jrazek.pong.Utils.Utils;
 import jrazek.pong.graphics.Frame;
 import jrazek.pong.graphics.myShape;
 

@@ -2,13 +2,13 @@ package jrazek.pong.AI;
 
 import jrazek.pong.Map;
 import jrazek.pong.Rules;
-import jrazek.pong.Utils;
+import jrazek.pong.Utils.CollisionGroup;
+import jrazek.pong.Utils.Utils;
 import jrazek.pong.entities.Ball;
 import jrazek.pong.entities.Paddle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class LearningIndividual {
     private Paddle paddle;
@@ -16,6 +16,7 @@ public class LearningIndividual {
     private Map map;
     private List<Float> indexes;
     private List<Float> params;
+    private CollisionGroup collisionGroup;
     private Float equationResult;
     private final int polynomialDegree;
 
@@ -26,8 +27,12 @@ public class LearningIndividual {
     public LearningIndividual(int pD, Map m){
         this.polynomialDegree = pD;
         this.map = m;
-        this.paddle = new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F(200, 900), map, map.getFrame());
+        this.paddle = new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F((float)Utils.randomDouble(0,700), 900), map, map.getFrame());
+        this.collisionGroup = new CollisionGroup();
+        this.paddle.setCollisionGroup(collisionGroup);
         this.ball = new Ball(60, new Utils.Vector2F(100, 100), map, map.getFrame());
+        this.ball.setCollisionGroup(collisionGroup);
+        ball.setVelocity(new Utils.Vector2F((float)Utils.randomDouble(0,10), -(float)Utils.randomDouble(0,10)));
         this.params = new ArrayList<>();
         this.indexes = new ArrayList<>();
         setParams();

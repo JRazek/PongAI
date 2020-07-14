@@ -1,6 +1,7 @@
 package jrazek.pong.abstracts;
 
-import jrazek.pong.Utils;
+import jrazek.pong.Utils.CollisionGroup;
+import jrazek.pong.Utils.Utils;
 import jrazek.pong.graphics.Frame;
 import jrazek.pong.graphics.myShape;
 
@@ -9,6 +10,7 @@ public abstract class DrawableObject {
     private Utils.Vector2F pos;
     private Frame frame;
     public boolean collidable;
+    public CollisionGroup collisionGroup;
     public boolean solid;
     //all shapes have rectangular bounding boxes
     private myShape shape;
@@ -35,7 +37,12 @@ public abstract class DrawableObject {
         return pos;
     }
 
-
+    public void setCollisionGroup(CollisionGroup cg) {
+        this.collisionGroup = cg;
+    }
+    public CollisionGroup getCollisionGroup(){
+        return collisionGroup;
+    }
     public boolean pointBelongs(Utils.Vector2F point){
         return (pos.getX() <= point.getX() && pos.getX() + shape.getSize().getX() >= point.getX()
                      &&  pos.getY() <= point.getY() && pos.getY() + shape.getSize().getY() >= point.getY()

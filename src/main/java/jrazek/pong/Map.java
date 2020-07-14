@@ -1,5 +1,6 @@
 package jrazek.pong;
 
+import jrazek.pong.Utils.Utils;
 import jrazek.pong.abstracts.DrawableObject;
 import jrazek.pong.abstracts.Entity;
 import jrazek.pong.entities.Ball;
@@ -37,7 +38,6 @@ public class Map extends DrawableObject {
         paddles.remove(e);
         entities.remove(e);
     }
-
     private void addPrivateEntity(Entity e) {
         this.entities.add(e);
     }
@@ -76,11 +76,11 @@ public class Map extends DrawableObject {
         }
             for(Entity collider : entities){
                 if(!entity.equals(collider))
-                    if(entity.isColliding(collider)) {
-                        if(!entity.isSolid()){
-                            entity.onCollision(false);
-                        }
-                    }
+                    if(collider.getCollisionGroup().equals(entity.getCollisionGroup()))
+                        if(!entity.isSolid())
+                            if(entity.isColliding(collider)) {
+                                entity.onCollision(false);
+                            }
             }
     }
     //returns the position of the ending position

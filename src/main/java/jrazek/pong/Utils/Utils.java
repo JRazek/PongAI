@@ -1,4 +1,4 @@
-package jrazek.pong;
+package jrazek.pong.Utils;
 import java.awt.*;
 import java.lang.reflect.Type;
 import java.util.Random;
