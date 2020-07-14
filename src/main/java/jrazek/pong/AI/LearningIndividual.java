@@ -17,6 +17,7 @@ public class LearningIndividual {
     private List<Float> indexes;
     private List<Float> params;
     private CollisionGroup collisionGroup;
+    private Utils.Domain indexesDomain;
     private Float equationResult;
     private final int polynomialDegree;
 
@@ -24,9 +25,10 @@ public class LearningIndividual {
         this()
     //todo
     }*/
-    public LearningIndividual(int pD, Map m){
+    public LearningIndividual(int pD, Map m, Utils.Domain dm){
         this.polynomialDegree = pD;
         this.map = m;
+        this.indexesDomain = dm;
         this.paddle = new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F((float)Utils.randomDouble(0,700), 900), map, map.getFrame());
         this.collisionGroup = new CollisionGroup();
         this.paddle.setCollisionGroup(collisionGroup);
@@ -42,9 +44,7 @@ public class LearningIndividual {
     }
     private void initRandomIndexes(){
         for(int i = 0; i < params.size()*polynomialDegree; i++){
-            float index = (float)Utils.randomDouble();
-            if(Utils.randomBoolean())
-                index *=-1;
+            float index = (float)Utils.randomDouble(indexesDomain.getMin(), indexesDomain.getMax());
             indexes.add(index);
         }
     }
@@ -59,11 +59,11 @@ public class LearningIndividual {
                 System.out.println("size - " + params.size());
                 System.out.println("i - " + i);
                 System.out.println("j - " + j);*/
-                equationResult += (float) (indexes.get(indexNum) *
-                        Math.pow(param, j + 1));
+                equationResult += (float) (indexes.get(indexNum) * Math.pow(param, j + 1));
                 indexNum++;
             }
         }
+        System.out.println("equation result = " + equationResult);
     }
     private void setVelocities(){
         if(Rules.maxAllowedSpeed >= equationResult)

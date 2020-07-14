@@ -15,7 +15,7 @@ public class Main {
     public static void main(String []str){
         frame.setMap(map);
         for(int i = 0; i < 10; i++){
-            learningIndividualList.add(new LearningIndividual(2, map));
+            learningIndividualList.add(new LearningIndividual(2, map, new Utils.Domain(-2, 2)));
         }
     }
 }
