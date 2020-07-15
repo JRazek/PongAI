@@ -1,5 +1,6 @@
 package jrazek.pong;
 
+import jdk.jshell.execution.Util;
 import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.entities.Paddle;
@@ -14,8 +15,10 @@ public class Main {
     private static List<LearningIndividual> learningIndividualList = new ArrayList<>();
     public static void main(String []str){
         frame.setMap(map);
-        for(int i = 0; i < 10; i++){
-            learningIndividualList.add(new LearningIndividual(2, map, new Utils.Domain(-1, 1)));
+        //System.out.println(Utils.randomDouble(-0.1,0.1));
+
+        for(int i = 0; i < Rules.individualsPerRound; i++){
+            map.addLearningIndividual(new LearningIndividual(2, map, new Utils.Domain(-2f, 2f)));
         }
     }
 }

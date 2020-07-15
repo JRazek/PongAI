@@ -1,5 +1,6 @@
 package jrazek.pong.abstracts;
 
+import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Map;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.graphics.Frame;
@@ -8,11 +9,13 @@ import jrazek.pong.graphics.myShape;
 public abstract class Entity extends DrawableObject {
     private Utils.Vector2F velocity = new Utils.Vector2F(0,0);
     private Map map;
-    public Entity(Utils.Vector2F pos, myShape s, Map map, Frame f){
+    LearningIndividual li;
+    public Entity(Utils.Vector2F pos, myShape s, Map map, Frame f, LearningIndividual li){
         super(f, s, pos, true);
+        this.li = li;
         setMap(map);
     }
-    public Entity(Utils.Vector2F pos, myShape s, boolean solid, Map map, Frame f){
+    public Entity(Utils.Vector2F pos, myShape s, boolean solid, Map map, Frame f, LearningIndividual li){
         super(f, s, pos, true, solid);
         setMap(map);
     }
@@ -41,11 +44,15 @@ public abstract class Entity extends DrawableObject {
     }
     public abstract void onCollision(boolean horizontal);//on true horizontal hit on false vertical hit
     public void kill(){
-
+        map.removeEntity(this);
+        map.getFrame().getGraphicsDraw().removeDrawable(this);
     }
 
     @Override
     public boolean isColliding(DrawableObject o) {
         return o.getShape().getShape().intersects(this.getShape().getShape().getBounds2D());
+    }
+    public LearningIndividual getLearningIndividual() {
+        return li;
     }
 }

@@ -62,6 +62,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
             map.step();
             ticks++;
             repaint();
+            stop();
         }
 
     }

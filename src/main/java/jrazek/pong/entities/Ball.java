@@ -1,5 +1,6 @@
 package jrazek.pong.entities;
 
+import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Map;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.abstracts.Entity;
@@ -12,8 +13,8 @@ import java.awt.geom.Ellipse2D;
 public class Ball extends Entity {
     private float radius;
     private Utils.Vector2F pos;
-    public Ball(float radius, Utils.Vector2F pos, Map map, Frame f){
-        super(pos, new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED, true), map, f);
+    public Ball(float radius, Utils.Vector2F pos, Map map, Frame f, LearningIndividual li){
+        super(pos, new myShape(new Ellipse2D.Float(pos.getX(), pos.getY(), radius, radius), Color.RED, true), map, f, li);
         this.radius = radius;
         this.pos = pos;
     }

@@ -55,6 +55,10 @@ public class Utils {
         Random r = new Random();
         return min + (max - min) * r.nextDouble();
     }
+    public static float randomFloat(float min, float max){
+        Random r = new Random();
+        return min + (max - min) * r.nextFloat();
+    }
     public static int randomInt(){
         return randomInt(Integer.MIN_VALUE, Integer.MAX_VALUE);
     }

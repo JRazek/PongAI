@@ -1,5 +1,6 @@
 package jrazek.pong;
 
+import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.abstracts.DrawableObject;
 import jrazek.pong.abstracts.Entity;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Map extends DrawableObject {
     private Utils.Vector2I size;
     private Frame frame;
+    private List<LearningIndividual> learningIndividuals = new ArrayList<>();
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
@@ -34,9 +36,7 @@ public class Map extends DrawableObject {
             this.paddles.add(paddle);
     }
     public void killEntity(Entity e){
-        balls.remove(e);
-        paddles.remove(e);
-        entities.remove(e);
+        e.getLearningIndividual().onFail();
     }
     private void addPrivateEntity(Entity e) {
         this.entities.add(e);
@@ -55,6 +55,11 @@ public class Map extends DrawableObject {
     }
     public void step() {
         //dont change!
+        for (int i = 0;  i < learningIndividuals.size(); i ++) {
+            LearningIndividual li = learningIndividuals.get(i);
+            li.step();
+        }
+
         for (int i = 0;  i < entities.size(); i ++) {
             Entity entity = entities.get(i);
             entity.move();
@@ -69,11 +74,14 @@ public class Map extends DrawableObject {
                 else
                     entity.onCollision(true);
             }
-            if (entity.getPos().getY() <= 0 || entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
+            if (entity.getPos().getY() <= 0) {
                 if(entity.isSolid())
                     entity.setVelocity(new Utils.Vector2F(0,0));
                 else
                     entity.onCollision(false);
+            }
+            if(entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()){
+                killEntity(entity);
             }
         }
             for(Entity collider : entities){
@@ -84,25 +92,6 @@ public class Map extends DrawableObject {
                                 entity.onCollision(false);
                             }
             }
-    }
-    //returns the position of the ending position
-    public Utils.Vector2F rayTraceVector(Utils.Vector2F startPos, Utils.Vector2F velocity){
-        float x = startPos.getX();
-        float y = startPos.getY();
-        float vx = velocity.getX();
-        float vy = velocity.getY();
-
-        float squaredExpectedDistance = vx * vx + vy * vy;
-
-
-        float m = 0;
-        float delta = Rules.rayTraceResolution;
-        while(m*m < squaredExpectedDistance){
-            m += delta;
-            float hSquared = (m*m*vx*vx)/(vx*vx+vy*vy);
-        }
-        //iteracja po wektorze
-        return null;
     }
     public void foreachAllEntityData(){
         for(Entity e : entities){
@@ -115,5 +104,16 @@ public class Map extends DrawableObject {
             System.out.println("Sx = " + e.getShape().getSize().getX());
             System.out.println("Sy = " + e.getShape().getSize().getY());
         }
+    }
+    public void removeEntity(Entity e){
+        balls.remove(e);
+        paddles.remove(e);
+        entities.remove(e);
+    }
+    public void addLearningIndividual(LearningIndividual li){
+        learningIndividuals.add(li);
+    }
+    public void removeLearningIndividual(LearningIndividual li){
+        learningIndividuals.remove(li);
     }
 }

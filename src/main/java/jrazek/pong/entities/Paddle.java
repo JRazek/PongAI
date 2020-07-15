@@ -1,4 +1,5 @@
 package jrazek.pong.entities;
+import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Map;
 import jrazek.pong.Utils.Utils.*;
 import jrazek.pong.abstracts.Entity;
@@ -11,8 +12,8 @@ import java.awt.geom.Rectangle2D;
 public class Paddle extends Entity {
     private Vector2F size;
     private Vector2F pos;
-    public Paddle(Vector2F size, Vector2F pos, Map map, Frame f){
-        super(pos, new myShape(new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(),size.getY()), Color.BLUE, true), true, map, f);
+    public Paddle(Vector2F size, Vector2F pos, Map map, Frame f, LearningIndividual li){
+        super(pos, new myShape(new Rectangle2D.Float(pos.getX(), pos.getY(), size.getX(),size.getY()), Color.BLUE, true), true, map, f, li);
         this.size = size;
         this.pos = pos;
     }

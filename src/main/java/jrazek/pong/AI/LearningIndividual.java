@@ -7,6 +7,7 @@ import jrazek.pong.Utils.Utils;
 import jrazek.pong.entities.Ball;
 import jrazek.pong.entities.Paddle;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class LearningIndividual {
     private Paddle paddle;
     private Ball ball;
     private Map map;
+    private Color color;
     private List<Float> indexes;
     private List<Float> params;
     private CollisionGroup collisionGroup;
@@ -29,47 +31,55 @@ public class LearningIndividual {
         this.polynomialDegree = pD;
         this.map = m;
         this.indexesDomain = dm;
-        this.paddle = new Paddle(new Utils.Vector2F(200, 20), new Utils.Vector2F((float)Utils.randomDouble(0,700), 900), map, map.getFrame());
+        this.color = new Color((int)(Math.random() * 0x1000000));
+        this.paddle = new Paddle(new Utils.Vector2F(200, 10), new Utils.Vector2F(Utils.randomFloat(0,800), 900), map, map.getFrame(), this);
         this.collisionGroup = new CollisionGroup();
         this.paddle.setCollisionGroup(collisionGroup);
-        this.ball = new Ball(60, new Utils.Vector2F(100, 100), map, map.getFrame());
+        this.paddle.getShape().setColor(color);
+        this.ball = new Ball(60, new Utils.Vector2F(Utils.randomFloat(0,800), Utils.randomFloat(0,800)), map, map.getFrame(), this);
         this.ball.setCollisionGroup(collisionGroup);
-        ball.setVelocity(new Utils.Vector2F((float)Utils.randomDouble(0,10), -(float)Utils.randomDouble(0,10)));
+        this.ball.getShape().setColor(color);
+        ball.setVelocity(new Utils.Vector2F(Utils.randomFloat(2,4), -Utils.randomFloat(4,10)));
         this.params = new ArrayList<>();
         this.indexes = new ArrayList<>();
-        setParams();
+        updateParams();
         initRandomIndexes();
         updatePolynomial();
         setVelocities();
     }
     private void initRandomIndexes(){
         for(int i = 0; i < params.size()*polynomialDegree; i++){
-            float index = (float)Utils.randomDouble(indexesDomain.getMin(), indexesDomain.getMax());
+            float index = Utils.randomFloat(indexesDomain.getMin(), indexesDomain.getMax());
             indexes.add(index);
         }
+    }
+    public void step(){
+        updateParams();
+        updatePolynomial();
+        updateParams();
     }
     private void updatePolynomial(){
         equationResult = 0f;
         System.out.println(params);
         int indexNum = 0;
-        for (Float param : params) {
+        System.out.println("============================");
+        System.out.print("W(x) = ");
+        for (int i = 0; i < params.size(); i ++) {
+            Float param = params.get(i);
             for (int j = 0; j < polynomialDegree; j++) {
-
-                /*System.out.println("----------------------------");
-                System.out.println("size - " + params.size());
-                System.out.println("i - " + i);
-                System.out.println("j - " + j);*/
-                equationResult += (float) (indexes.get(indexNum) * Math.pow(param, j + 1));
+                equationResult += (indexes.get(indexNum) * (float)Math.pow(param, j+1));
                 indexNum++;
             }
         }
+        System.out.println("============================");
         System.out.println("equation result = " + equationResult);
     }
     private void setVelocities(){
-        if(Rules.maxAllowedSpeed >= equationResult)
+        if(Rules.maxAllowedSpeed >= equationResult || Rules.maxAllowedSpeed == 0)
             paddle.setVelocity(new Utils.Vector2F(equationResult, 0));
     }
-    private void setParams(){
+    private void updateParams(){
+        params.clear();
         params.add(paddle.getPos().getX());
         params.add(paddle.getPos().getY());
         params.add(paddle.getShape().getSize().getX());
@@ -95,6 +105,8 @@ public class LearningIndividual {
         }
     }
     public void onFail(){
-
+        paddle.kill();
+        ball.kill();
+        this.map.removeLearningIndividual(this);
     }
 }
