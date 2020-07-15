@@ -21,6 +21,7 @@ public class LearningIndividual {
     private CollisionGroup collisionGroup;
     private Utils.Domain indexesDomain;
     private Float equationResult;
+    private boolean active;
     private final int polynomialDegree;
 
     /*LearningIndividual(LearningIndividual parent1, LearningIndividual parent2){
@@ -31,6 +32,7 @@ public class LearningIndividual {
         this.polynomialDegree = pD;
         this.map = m;
         this.indexesDomain = dm;
+        this.active = true;
         this.color = new Color((int)(Math.random() * 0x1000000));
         this.paddle = new Paddle(new Utils.Vector2F(200, 10), new Utils.Vector2F(Utils.randomFloat(0,800), 900), map, map.getFrame(), this);
         this.collisionGroup = new CollisionGroup();
@@ -60,10 +62,10 @@ public class LearningIndividual {
     }
     private void updatePolynomial(){
         equationResult = 0f;
-        System.out.println(params);
+       // System.out.println(params);
         int indexNum = 0;
-        System.out.println("============================");
-        System.out.print("W(x) = ");
+       // System.out.println("============================");
+      //  System.out.print("W(x) = ");
         for (int i = 0; i < params.size(); i ++) {
             Float param = params.get(i);
             for (int j = 0; j < polynomialDegree; j++) {
@@ -71,8 +73,8 @@ public class LearningIndividual {
                 indexNum++;
             }
         }
-        System.out.println("============================");
-        System.out.println("equation result = " + equationResult);
+       // System.out.println("============================");
+       // System.out.println("equation result = " + equationResult);
     }
     private void setVelocities(){
         if(Rules.maxAllowedSpeed >= equationResult || Rules.maxAllowedSpeed == 0)
@@ -107,6 +109,17 @@ public class LearningIndividual {
     public void onFail(){
         paddle.kill();
         ball.kill();
-        this.map.removeLearningIndividual(this);
+        active = false;
+    }
+    public Ball getBall(){
+        return ball;
+    }
+
+    public Paddle getPaddle() {
+        return paddle;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

@@ -1,6 +1,7 @@
 package jrazek.pong;
 
 import jrazek.pong.AI.LearningIndividual;
+import jrazek.pong.AI.RewardClass;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.abstracts.DrawableObject;
 import jrazek.pong.abstracts.Entity;
@@ -21,6 +22,7 @@ public class Map extends DrawableObject {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
+    private RewardClass rewardClass = new RewardClass(this);
     public Map(Utils.Vector2I size, Frame frame){
         super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0), false);
         this.size = size;
@@ -57,14 +59,24 @@ public class Map extends DrawableObject {
         //dont change!
         for (int i = 0;  i < learningIndividuals.size(); i ++) {
             LearningIndividual li = learningIndividuals.get(i);
-            li.step();
+            if(li.isActive())
+                li.step();
         }
 
         for (int i = 0;  i < entities.size(); i ++) {
             Entity entity = entities.get(i);
             entity.move();
             checkCollisions(entity);
+            if(entity instanceof Ball)
+                checkIfPassingPaddle(entity);
         }
+    }
+    public void checkIfPassingPaddle(Entity e){
+        Utils.Vector2F paddlePos = e.getLearningIndividual().getPaddle().getPos();
+        Utils.Vector2F paddleSize = e.getLearningIndividual().getPaddle().getShape().getSize();
+        Utils.Vector2F ballPos = e.getPos();
+        if(ballPos.getY() >= paddlePos.getY() && ballPos.getY() < paddlePos.getY() + paddleSize.getY())
+            rewardClass.test(e.getLearningIndividual());
     }
     public void checkCollisions(Entity entity){
         if(entity.isColliding(this)) {
@@ -90,6 +102,8 @@ public class Map extends DrawableObject {
                         if(!entity.isSolid())
                             if(entity.isColliding(collider)) {
                                 entity.onCollision(false);
+                                if(entity instanceof Ball)
+                                    rewardClass.test(entity.getLearningIndividual());
                             }
             }
     }
@@ -110,10 +124,17 @@ public class Map extends DrawableObject {
         paddles.remove(e);
         entities.remove(e);
     }
+    public void initNewGeneration(){
+
+    }
     public void addLearningIndividual(LearningIndividual li){
         learningIndividuals.add(li);
     }
     public void removeLearningIndividual(LearningIndividual li){
         learningIndividuals.remove(li);
+    }
+
+    public List<LearningIndividual> getLearningIndividuals() {
+        return learningIndividuals;
     }
 }
