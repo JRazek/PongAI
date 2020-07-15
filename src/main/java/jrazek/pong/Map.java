@@ -1,5 +1,6 @@
 package jrazek.pong;
 
+import jrazek.pong.AI.GodClass;
 import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.AI.RewardClass;
 import jrazek.pong.Utils.Utils;
@@ -23,6 +24,7 @@ public class Map extends DrawableObject {
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
     private RewardClass rewardClass = new RewardClass(this);
+    private GodClass godClass = new GodClass(this);
     public Map(Utils.Vector2I size, Frame frame){
         super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0), false);
         this.size = size;
@@ -57,10 +59,12 @@ public class Map extends DrawableObject {
     }
     public void step() {
         //dont change!
+        int totalInactive = 0;
         for (int i = 0;  i < learningIndividuals.size(); i ++) {
             LearningIndividual li = learningIndividuals.get(i);
-            if(li.isActive())
+            if(li.isActive()) {
                 li.step();
+            }else totalInactive ++;
         }
 
         for (int i = 0;  i < entities.size(); i ++) {
@@ -70,6 +74,8 @@ public class Map extends DrawableObject {
             if(entity instanceof Ball)
                 checkIfPassingPaddle(entity);
         }
+        if(totalInactive >= learningIndividuals.size())
+            godClass.startNewGeneration();
     }
     public void checkIfPassingPaddle(Entity e){
         Utils.Vector2F paddlePos = e.getLearningIndividual().getPaddle().getPos();
@@ -133,7 +139,9 @@ public class Map extends DrawableObject {
     public void removeLearningIndividual(LearningIndividual li){
         learningIndividuals.remove(li);
     }
-
+    public RewardClass getRewardClass() {
+        return rewardClass;
+    }
     public List<LearningIndividual> getLearningIndividuals() {
         return learningIndividuals;
     }

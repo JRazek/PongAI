@@ -6,7 +6,7 @@ import java.util.Map;
 import static java.lang.Math.abs;
 
 public class RewardClass {
-    private double rewardsSum = 0;
+    private double resultRewardsSum = 0;
     private Map<LearningIndividual, Float> totalScores = new HashMap<>();
     private Map<LearningIndividual, Integer> timesMeasured = new HashMap<>();
     private Map<LearningIndividual, Float> resultScore = new HashMap<>();
@@ -19,7 +19,6 @@ public class RewardClass {
     }
     public void test(LearningIndividual li){
         float score = abs(1/(li.getBall().getPos().getX() - li.getPaddle().getPos().getX()));
-
         float total = 0;
         if(totalScores.get(li) != null)
             total = totalScores.get(li);
@@ -32,6 +31,7 @@ public class RewardClass {
         if(resultScore.get(li) != null)
             resultScoreFloat = totalScores.get(li)/timesMeasured.get(li);
 
+        resultRewardsSum += resultScoreFloat;
 
         totalScores.put(li, total + score);
         timesMeasured.put(li, timesMeasuredInt + 1);
@@ -39,4 +39,10 @@ public class RewardClass {
         System.out.println("Now");
     }
 
+    public double getResultRewardsSum() {
+        return resultRewardsSum;
+    }
+    public Map<LearningIndividual, Float> getResultScore() {
+        return resultScore;
+    }
 }
