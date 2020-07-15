@@ -50,8 +50,8 @@ public class LearningIndividual {
     }
     private void updatePolynomial(){
         equationResult = 0f;
-        int indexNum = 0;
         System.out.println(params);
+        int indexNum = 0;
         for (Float param : params) {
             for (int j = 0; j < polynomialDegree; j++) {
 

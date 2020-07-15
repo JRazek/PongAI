@@ -54,7 +54,9 @@ public class Map extends DrawableObject {
         return size;
     }
     public void step() {
-        for (Entity entity : entities) {
+        //dont change!
+        for (int i = 0;  i < entities.size(); i ++) {
+            Entity entity = entities.get(i);
             entity.move();
             checkCollisions(entity);
         }

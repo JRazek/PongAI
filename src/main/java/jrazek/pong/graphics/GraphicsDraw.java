@@ -29,8 +29,9 @@ public class GraphicsDraw extends JPanel implements ActionListener{
         Graphics2D g2D = (Graphics2D)g;
         if(isLinux)
             Toolkit.getDefaultToolkit().sync();
-
-        for(DrawableObject o : drawableObjects){
+        //dont change!
+        for(int i = 0 ; i < drawableObjects.size(); i++){
+            DrawableObject o = drawableObjects.get(i);
             myShape s = o.getShape();
             g2D.setColor(s.getColor());
             if(s.isFilled()) {
