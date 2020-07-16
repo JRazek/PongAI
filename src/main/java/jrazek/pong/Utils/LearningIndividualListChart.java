@@ -1,41 +1,41 @@
 package jrazek.pong.Utils;
 
 import jrazek.pong.AI.LearningIndividual;
+import jrazek.pong.AI.RewardClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class LearningIndividualListChart {
-    float n;
+    private float totalSum;//total
+    private RewardClass rc;
     private class Cell{
-        Cell prevCell;
-        Cell nextCell;
-        float value;
-        LearningIndividual learningIndividual;
-        Cell(LearningIndividual li){
+        private float startValue;
+        private float endValue;
+        private LearningIndividual learningIndividual;
+        Cell(LearningIndividual li, Float startValue, Float endValue){
             this.learningIndividual = li;
-        }
-        Cell(LearningIndividual li, Cell prev){
-            this.learningIndividual = li;
-            this.prevCell = prev;
+            this.startValue = startValue;
+            this.endValue = endValue;
         }
     }
     List<Cell> cells;
-    //todo
-    public LearningIndividualListChart(float n, List<LearningIndividual> list){
-        this.n = n;
-        cells = new ArrayList<>(list.size());
-        for(int i = 0; i < list.size(); i ++){
-            LearningIndividual li = list.get(i);
-            if(cells.size() == 0){
-                cells.add(new Cell(li));
-            }
-            else{
-                Cell tmp1 = cells.get(i-1);
-                Cell tmp2 = new Cell(li, tmp1);
-                cells.add(tmp2);
-                tmp1.nextCell = tmp2;
-            }
+    public LearningIndividualListChart(RewardClass rc){
+        this.totalSum = (float)rc.getResultRewardsSum();
+        cells = new ArrayList<>(rc.getResultScore().size());
+        float sum = 0;
+        for (Map.Entry<LearningIndividual, Float> entry : rc.getResultScore().entrySet()) {
+            cells.add(new Cell(entry.getKey(), sum, sum + entry.getValue()));
+            sum += entry.getValue();
         }
+    }
+    LearningIndividual getByScore(float score){
+        //todo binary search
+        for(Cell c : cells){
+            if(c.startValue <= score && c.endValue > score)
+                return c.learningIndividual;
+        }
+        return null;
     }
 }
