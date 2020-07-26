@@ -47,7 +47,14 @@ public class Map extends DrawableObject {
     public boolean isColliding(DrawableObject po) {
         return false;
     }
-
+    public void reset(){
+        learningIndividuals = new ArrayList<>();
+        entities = new ArrayList<>();
+        paddles = new ArrayList<>();
+        balls = new ArrayList<>();
+        initRewardClass();
+        initGodClass();
+    }
     public Frame getFrame() {
         return frame;
     }
@@ -77,7 +84,9 @@ public class Map extends DrawableObject {
         if(totalInactive >= learningIndividuals.size()) {
           //  System.out.println("second");
             frame.getGraphicsDraw().stop();//unstop on done initialising
-            godClass.startNewGeneration();
+            godClass.createNewGeneration();
+            this.setLearningIndividuals(godClass.getNewGeneration());
+            this.reset();
         }
     }
     public void checkIfPassingPaddle(Entity e){
@@ -139,6 +148,9 @@ public class Map extends DrawableObject {
     }
     public void addLearningIndividual(LearningIndividual li){
         learningIndividuals.add(li);
+    }
+    public void setLearningIndividuals(List<LearningIndividual> list){
+        this.learningIndividuals = list;
     }
     public void removeLearningIndividual(LearningIndividual li){
         learningIndividuals.remove(li);

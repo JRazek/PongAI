@@ -1,12 +1,13 @@
 package jrazek.pong.AI;
 
+import jrazek.pong.Utils.LearningIndividualListChart;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import static java.lang.Math.abs;
 
 public class RewardClass {
-    private double resultRewardsSum = 0;
     private Map<LearningIndividual, Float> totalScores = new HashMap<>();
     private Map<LearningIndividual, Integer> timesMeasured = new HashMap<>();
     private Map<LearningIndividual, Float> resultScore = new HashMap<>();
@@ -28,8 +29,6 @@ public class RewardClass {
 
         float resultScoreFloat = totalScores.get(li)/timesMeasured.get(li);
 
-        resultRewardsSum += resultScoreFloat;
-
         totalScores.put(li, total + score);
         timesMeasured.put(li, timesMeasuredInt + 1);
         resultScore.put(li, resultScoreFloat);
@@ -37,7 +36,12 @@ public class RewardClass {
     }
 
     public double getResultRewardsSum() {
-        return resultRewardsSum;
+        double sum = 0;
+        for (Map.Entry<LearningIndividual, Float> entry : resultScore.entrySet()) {
+            sum += entry.getValue();
+            System.out.println(sum);
+        }
+        return sum;
     }
     public Map<LearningIndividual, Float> getResultScore() {
         return resultScore;
