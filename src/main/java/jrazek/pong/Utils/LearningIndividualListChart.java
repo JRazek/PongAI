@@ -25,14 +25,18 @@ public class LearningIndividualListChart {
         this.totalSum = (float)rc.getResultRewardsSum();
         cells = new ArrayList<>(rc.getResultScore().size());
         float sum = 0;
+
+        System.out.println("Map size = " + rc.getResultScore().size());
         for (Map.Entry<LearningIndividual, Float> entry : rc.getResultScore().entrySet()) {
             cells.add(new Cell(entry.getKey(), sum, sum + entry.getValue()));
             sum += entry.getValue();
+            System.out.println("Here");
         }
     }
-    LearningIndividual getByScore(float score){
+    public LearningIndividual getByScore(float score){
         //todo binary search
         for(Cell c : cells){
+            System.out.println(c);
             if(c.startValue <= score && c.endValue > score)
                 return c.learningIndividual;
         }

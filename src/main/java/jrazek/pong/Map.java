@@ -39,9 +39,6 @@ public class Map extends DrawableObject {
             addPrivateEntity(paddle);
             this.paddles.add(paddle);
     }
-    public void killEntity(Entity e){
-        e.getLearningIndividual().onFail();
-    }
     private void addPrivateEntity(Entity e) {
         this.entities.add(e);
     }
@@ -58,8 +55,8 @@ public class Map extends DrawableObject {
         return size;
     }
     public void step() {
-        //dont change!
         int totalInactive = 0;
+        //dont change!
         for (int i = 0;  i < learningIndividuals.size(); i ++) {
             LearningIndividual li = learningIndividuals.get(i);
             if(li.isActive()) {
@@ -85,33 +82,35 @@ public class Map extends DrawableObject {
             rewardClass.test(e.getLearningIndividual());
     }
     public void checkCollisions(Entity entity){
-        if(entity.isColliding(this)) {
-            if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
-                if(entity.isSolid())
-                    entity.setVelocity(new Utils.Vector2F(0,0));
-                else
-                    entity.onCollision(true);
+        if(entity.isAlive()) {
+            if (entity.isColliding(this)) {
+                if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
+                    if (entity.isSolid())
+                        entity.setVelocity(new Utils.Vector2F(0, 0));
+                    else
+                        entity.onCollision(true);
+                }
+                if (entity.getPos().getY() <= 0) {
+                    if (entity.isSolid())
+                        entity.onCollision(false);
+                    else
+                        entity.onCollision(false);
+                }
+                if (entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
+                    entity.getLearningIndividual().onFail();
+                }
             }
-            if (entity.getPos().getY() <= 0) {
-                if(entity.isSolid())
-                    entity.setVelocity(new Utils.Vector2F(0,0));
-                else
-                    entity.onCollision(false);
-            }
-            if(entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()){
-                killEntity(entity);
-            }
-        }
-            for(Entity collider : entities){
-                if(!entity.equals(collider))
-                    if(collider.getCollisionGroup().equals(entity.getCollisionGroup()))
-                        if(!entity.isSolid())
-                            if(entity.isColliding(collider)) {
+            for (Entity collider : entities) {
+                if (!entity.equals(collider))
+                    if (collider.getCollisionGroup().equals(entity.getCollisionGroup()))
+                        if (!entity.isSolid())
+                            if (entity.isColliding(collider)) {
                                 entity.onCollision(false);
-                                if(entity instanceof Ball)
+                                if (entity instanceof Ball)
                                     rewardClass.test(entity.getLearningIndividual());
                             }
             }
+        }
     }
     public void foreachAllEntityData(){
         for(Entity e : entities){
@@ -130,8 +129,8 @@ public class Map extends DrawableObject {
         paddles.remove(e);
         entities.remove(e);
     }
-    public void initNewGeneration(){
-
+    public void setKilled(Entity e){
+        e.kill();
     }
     public void addLearningIndividual(LearningIndividual li){
         learningIndividuals.add(li);

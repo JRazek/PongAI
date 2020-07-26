@@ -24,10 +24,6 @@ public class LearningIndividual {
     private boolean active;
     private final int polynomialDegree;
 
-    /*LearningIndividual(LearningIndividual parent1, LearningIndividual parent2){
-        this()
-    //todo
-    }*/
     public LearningIndividual(int pD, Map m, Utils.Domain dm){
         this.polynomialDegree = pD;
         this.map = m;
@@ -49,36 +45,47 @@ public class LearningIndividual {
         updatePolynomial();
         setVelocities();
     }
+    public LearningIndividual(LearningIndividual p1, LearningIndividual p2){
+        this(p1.getPolynomialDegree(), p1.getMap(), p1.getIndexesDomain());
+    //    this.polynomialDegree = 0;
+        System.out.print(p1);
+        this.mixIndexes(p1.getIndexes(), p2.getIndexes());
+    }
+
+    public void step(){
+        updateParams();
+        updatePolynomial();
+        setVelocities();
+    }
     private void initRandomIndexes(){
         for(int i = 0; i < params.size()*polynomialDegree; i++){
             float index = Utils.randomFloat(indexesDomain.getMin(), indexesDomain.getMax());
             indexes.add(index);
         }
     }
-    public void step(){
-        updateParams();
-        updatePolynomial();
-        updateParams();
-    }
     private void updatePolynomial(){
         equationResult = 0f;
        // System.out.println(params);
         int indexNum = 0;
        // System.out.println("============================");
-      //  System.out.print("W(x) = ");
+        System.out.print("W(x) = ");
         for (int i = 0; i < params.size(); i ++) {
             Float param = params.get(i);
             for (int j = 0; j < polynomialDegree; j++) {
-                equationResult += (indexes.get(indexNum) * (float)Math.pow(param, j+1));
+                float add = indexes.get(indexNum) * (float)Math.pow(param, j+1);
+                equationResult += (add);
+                System.out.print(add + " + ");
                 indexNum++;
             }
         }
        // System.out.println("============================");
-       // System.out.println("equation result = " + equationResult);
+        System.out.println("equation result = " + equationResult);
     }
     private void setVelocities(){
         if(Rules.maxAllowedSpeed >= equationResult || Rules.maxAllowedSpeed == 0)
             paddle.setVelocity(new Utils.Vector2F(equationResult, 0));
+        else
+            this.onFail();
     }
     private void updateParams(){
         params.clear();
@@ -114,11 +121,21 @@ public class LearningIndividual {
     public Ball getBall(){
         return ball;
     }
-
+    private List<Float> getIndexes(){
+        return indexes;
+    }
+    public int getPolynomialDegree() {
+        return polynomialDegree;
+    }
+    public Utils.Domain getIndexesDomain() {
+        return indexesDomain;
+    }
     public Paddle getPaddle() {
         return paddle;
     }
-
+    public Map getMap() {
+        return map;
+    }
     public boolean isActive() {
         return active;
     }

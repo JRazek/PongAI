@@ -9,6 +9,7 @@ import jrazek.pong.graphics.myShape;
 public abstract class Entity extends DrawableObject {
     private Utils.Vector2F velocity = new Utils.Vector2F(0,0);
     private Map map;
+    private boolean alive = true;
     LearningIndividual li;
     public Entity(Utils.Vector2F pos, myShape s, Map map, Frame f, LearningIndividual li){
         super(f, s, pos, true);
@@ -44,10 +45,12 @@ public abstract class Entity extends DrawableObject {
     }
     public abstract void onCollision(boolean horizontal);//on true horizontal hit on false vertical hit
     public void kill(){
-        map.removeEntity(this);
+        alive = false;
         map.getFrame().getGraphicsDraw().removeDrawable(this);
     }
-
+    public boolean isAlive() {
+        return alive;
+    }
     @Override
     public boolean isColliding(DrawableObject o) {
         return o.getShape().getShape().intersects(this.getShape().getShape().getBounds2D());
