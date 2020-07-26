@@ -13,10 +13,9 @@ public class GodClass {
     private LearningIndividualListChart learningIndividualListChart;
     public GodClass(Map m){
         this.rewardClass = m.getRewardClass();
-        learningIndividualListChart = new LearningIndividualListChart(rewardClass);
     }
     public void startNewGeneration(){
-
+        learningIndividualListChart = new LearningIndividualListChart(rewardClass);
         while (newGeneration.size() != Rules.individualsPerRound){
             Float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             Float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());

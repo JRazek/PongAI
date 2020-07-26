@@ -62,25 +62,31 @@ public class Map extends DrawableObject {
             if(li.isActive()) {
                 li.step();
             }
-            else totalInactive ++;
+            else
+                totalInactive ++;
         }
 
         for (int i = 0;  i < entities.size(); i ++) {
             Entity entity = entities.get(i);
             entity.move();
             checkCollisions(entity);
-            if(entity instanceof Ball)
+            if(entity instanceof Ball) {
                 checkIfPassingPaddle(entity);
+            }
         }
-        if(totalInactive >= learningIndividuals.size())
+        if(totalInactive >= learningIndividuals.size()) {
+          //  System.out.println("second");
+            frame.getGraphicsDraw().stop();//unstop on done initialising
             godClass.startNewGeneration();
+        }
     }
     public void checkIfPassingPaddle(Entity e){
         Utils.Vector2F paddlePos = e.getLearningIndividual().getPaddle().getPos();
         Utils.Vector2F paddleSize = e.getLearningIndividual().getPaddle().getShape().getSize();
         Utils.Vector2F ballPos = e.getPos();
-        if(ballPos.getY() >= paddlePos.getY() && ballPos.getY() < paddlePos.getY() + paddleSize.getY())
+        if(ballPos.getY() >= paddlePos.getY() && ballPos.getY() < paddlePos.getY() + paddleSize.getY()) {
             rewardClass.test(e.getLearningIndividual());
+        }
     }
     public void checkCollisions(Entity entity){
         if(entity.isVisible()) {
@@ -98,6 +104,7 @@ public class Map extends DrawableObject {
                         entity.onCollision(false);
                 }
                 if (entity.getPos().getY() + entity.getShape().getShape().getBounds().getHeight() >= size.getY()) {
+                    rewardClass.test(entity.getLearningIndividual());
                     entity.getLearningIndividual().onFail();
                 }
             }

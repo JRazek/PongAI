@@ -19,25 +19,21 @@ public class RewardClass {
         }
     }
     public void test(LearningIndividual li){
+        System.out.println("testing...");
         float score = abs(1/(li.getBall().getPos().getX() - li.getPaddle().getPos().getX()));
-        float total = 0;
-        if(totalScores.get(li) != null)
-            total = totalScores.get(li);
 
-        int timesMeasuredInt = 0;
-        if(timesMeasured.get(li) != null)
-            timesMeasuredInt = timesMeasured.get(li);
+        float total = totalScores.get(li);
 
-        float resultScoreFloat = 0;
-        if(resultScore.get(li) != null)
-            resultScoreFloat = totalScores.get(li)/timesMeasured.get(li);
+        int timesMeasuredInt = timesMeasured.get(li);
+
+        float resultScoreFloat = totalScores.get(li)/timesMeasured.get(li);
 
         resultRewardsSum += resultScoreFloat;
 
         totalScores.put(li, total + score);
         timesMeasured.put(li, timesMeasuredInt + 1);
         resultScore.put(li, resultScoreFloat);
-        //System.out.println("Now");
+        //System.out.println("resultScoreFloat - " + resultScore.get(li));
     }
 
     public double getResultRewardsSum() {

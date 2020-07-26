@@ -20,7 +20,7 @@ public class LearningIndividualListChart {
             this.endValue = endValue;
         }
     }
-    List<Cell> cells;
+    private List<Cell> cells;
     public LearningIndividualListChart(RewardClass rc){
         this.totalSum = (float)rc.getResultRewardsSum();
         cells = new ArrayList<>(rc.getResultScore().size());
@@ -30,8 +30,9 @@ public class LearningIndividualListChart {
         for (Map.Entry<LearningIndividual, Float> entry : rc.getResultScore().entrySet()) {
             cells.add(new Cell(entry.getKey(), sum, sum + entry.getValue()));
             sum += entry.getValue();
-           // System.out.println("Here");
+            System.out.println("start - " + sum + "  end - " + entry.getValue());
         }
+       // System.out.println(cells.size() + " cells created");
     }
     public LearningIndividual getByScore(float score){
         //todo binary search
