@@ -7,5 +7,6 @@ public class Rules {
     public static final float maxAllowedSpeed = 10;
     public static final float mutationRate = 0.01f;
     public static final int polynomialDegree = 2;
+    public static final int maxTicksPerGeneration = 1000;
     public static final Utils.Domain indexesDomain = new Utils.Domain(-0.0001f, 0.0001f);
 }

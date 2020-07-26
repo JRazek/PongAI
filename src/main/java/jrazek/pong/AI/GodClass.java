@@ -19,12 +19,23 @@ public class GodClass {
     public void createNewGeneration(){
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
         while (newGeneration.size() != Rules.individualsPerRound){
+            System.out.println("Guessed max is... " + rewardClass.getResultRewardsSum());
             Float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             Float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
             LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
-            LearningIndividual child = new LearningIndividual(parent1, parent2);
-            newGeneration.add(child);
+            if(parent1 != null && parent2 != null) {
+                LearningIndividual child = new LearningIndividual(parent1, parent2);
+                if (Utils.randomFloat(0, 99) < Rules.mutationRate * 100) {
+                    child.mutate();
+                    System.out.println("Mutation");
+                }
+                newGeneration.add(child);
+            }
+            else{
+                System.out.println("ERROR!");
+                System.exit(1);
+            }
             //System.out.println(parent1);
            // System.out.println("Our hero float is + " + rewardClass.getResultRewardsSum() + "!!!");
             //kolo ruletka do losowania

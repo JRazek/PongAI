@@ -47,8 +47,6 @@ public class LearningIndividual {
     }
     public LearningIndividual(LearningIndividual p1, LearningIndividual p2){
         this(p1.getPolynomialDegree(), p1.getMap(), p1.getIndexesDomain());
-    //    this.polynomialDegree = 0;
-        System.out.print(p1);
         this.mixIndexes(p1.getIndexes(), p2.getIndexes());
     }
 
@@ -144,5 +142,9 @@ public class LearningIndividual {
     }
     public boolean isActive() {
         return active;
+    }
+    public void mutate(){
+        int index = Utils.randomInt(0, indexes.size());
+        indexes.set(index, Utils.randomFloat(Rules.indexesDomain.getMin(), Rules.indexesDomain.getMax()));
     }
 }

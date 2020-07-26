@@ -29,6 +29,9 @@ public abstract class DrawableObject {
     public void addToDrawList(){
         frame.getGraphicsDraw().addDrawable(this);
     }
+    public void removeFromDrawList(){
+        frame.getGraphicsDraw().removeDrawable(this);
+    }
     public void setPos(Utils.Vector2F p){
         this.pos = p;
     }

@@ -20,8 +20,8 @@ public class MouseListener implements java.awt.event.MouseListener {
         else if(mouseEvent.getButton() == 3){
             Main.paddle.accelerate(new Utils.Vector2F(1,0));
         }*/
-        System.out.println("MOUSE CLICKED - ");
-       // frame.getGraphicsDraw().toggleTimer();
+        //System.out.println("MOUSE CLICKED - ");
+        //frame.getGraphicsDraw().start();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package jrazek.pong.graphics;
 
 import jrazek.pong.Map;
+import jrazek.pong.Rules;
 import jrazek.pong.abstracts.DrawableObject;
 
 import javax.swing.*;
@@ -15,6 +16,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     private Timer timer;
     private int ticks = 0;
+    private int ticksOnCurrentGeneration = 0;
     private Map map;//only for incrementing step
     private List<DrawableObject> drawableObjects = new ArrayList<>();
     boolean isLinux;
@@ -51,17 +53,27 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(10,this);
+        timer = new Timer(2,this);
         map.getFrame().addMouseListener(new MouseListener(map.getFrame(), map));
     }
 
-
+    public List<DrawableObject> getDrawableObjects() {
+        return drawableObjects;
+    }
+    public void removeDrawables(){
+        drawableObjects.clear();
+    }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if((actionEvent.getSource() instanceof Timer)) {
             map.step();
             ticks++;
+            ticksOnCurrentGeneration++;
+           // System.out.println("tick tok");
             repaint();
+            if(ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration) {
+                map.newGeneration();
+            }
         }
 
     }
@@ -78,5 +90,8 @@ public class GraphicsDraw extends JPanel implements ActionListener{
     }
     public void stop(){
         timer.stop();
+    }
+    public void resetGenerationTicker(){
+        ticksOnCurrentGeneration = 0;
     }
 }

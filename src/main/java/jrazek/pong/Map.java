@@ -25,6 +25,7 @@ public class Map extends DrawableObject {
     private List<Entity> balls = new ArrayList<>();
     private RewardClass rewardClass;
     private GodClass godClass;
+    private int generationNumber = 0;
     public Map(Utils.Vector2I size, Frame frame){
         super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0), false);
         this.size = size;
@@ -48,10 +49,6 @@ public class Map extends DrawableObject {
         return false;
     }
     public void reset(){
-        learningIndividuals = new ArrayList<>();
-        entities = new ArrayList<>();
-        paddles = new ArrayList<>();
-        balls = new ArrayList<>();
         initRewardClass();
         initGodClass();
     }
@@ -82,12 +79,20 @@ public class Map extends DrawableObject {
             }
         }
         if(totalInactive >= learningIndividuals.size()) {
-          //  System.out.println("second");
-            frame.getGraphicsDraw().stop();//unstop on done initialising
-            godClass.createNewGeneration();
-            this.setLearningIndividuals(godClass.getNewGeneration());
-            this.reset();
+            newGeneration();
         }
+    }
+    public void newGeneration(){
+        frame.getGraphicsDraw().stop();//unstop on done initialising
+        frame.getGraphicsDraw().removeDrawables();
+        godClass.createNewGeneration();
+        this.setLearningIndividuals(godClass.getNewGeneration());
+        initRewardClass();
+        initGodClass();
+        frame.getGraphicsDraw().resetGenerationTicker();
+        generationNumber++;
+        System.out.println("Todays number is " + generationNumber);
+        frame.getGraphicsDraw().start();
     }
     public void checkIfPassingPaddle(Entity e){
         Utils.Vector2F paddlePos = e.getLearningIndividual().getPaddle().getPos();
@@ -150,6 +155,12 @@ public class Map extends DrawableObject {
         learningIndividuals.add(li);
     }
     public void setLearningIndividuals(List<LearningIndividual> list){
+        for(LearningIndividual li : learningIndividuals){
+            li.getPaddle().removeFromDrawList();
+            li.getBall().removeFromDrawList();
+            this.removeEntity(li.getBall());
+            this.removeEntity(li.getPaddle());
+        }
         this.learningIndividuals = list;
     }
     public void removeLearningIndividual(LearningIndividual li){

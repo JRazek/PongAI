@@ -11,16 +11,21 @@ public class RewardClass {
     private Map<LearningIndividual, Float> totalScores = new HashMap<>();
     private Map<LearningIndividual, Integer> timesMeasured = new HashMap<>();
     private Map<LearningIndividual, Float> resultScore = new HashMap<>();
+    private jrazek.pong.Map map;
     public RewardClass(jrazek.pong.Map m){
-        System.out.println("Learning individuals size = " + m.getLearningIndividuals().size());
+        this.map = m;
+        //System.out.println("Learning individuals size = " + m.getLearningIndividuals().size());
         for(LearningIndividual li : m.getLearningIndividuals()){
             totalScores.put(li, 0f);
             timesMeasured.put(li, 0);
             resultScore.put(li, 0f);
         }
+        System.out.println("Creating reward class...");
     }
     public void test(LearningIndividual li){
-        System.out.println("testing...");
+        if(totalScores.get(li) == null)
+            System.out.println("KURwa");
+        //System.out.println("testing...");
         float score = abs(1/(li.getBall().getPos().getX() - li.getPaddle().getPos().getX()));
 
         float total = totalScores.get(li);
@@ -39,7 +44,7 @@ public class RewardClass {
         double sum = 0;
         for (Map.Entry<LearningIndividual, Float> entry : resultScore.entrySet()) {
             sum += entry.getValue();
-            System.out.println(sum);
+           // System.out.println(sum);
         }
         return sum;
     }
