@@ -22,7 +22,8 @@ public class GodClass {
             Float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
             LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
-            LearningIndividual child = new LearningIndividual(parent1, parent2);
+            System.out.println(parent1);
+            break;
             //kolo ruletka do losowania
            // Utils.randomDouble(0, rewardClass.getResultRewardsSum());
         }

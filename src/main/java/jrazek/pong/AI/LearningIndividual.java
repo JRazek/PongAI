@@ -68,22 +68,28 @@ public class LearningIndividual {
        // System.out.println(params);
         int indexNum = 0;
        // System.out.println("============================");
-        System.out.print("W(x) = ");
+    //    System.out.print("W(x) = ");
         for (int i = 0; i < params.size(); i ++) {
             Float param = params.get(i);
             for (int j = 0; j < polynomialDegree; j++) {
                 float add = indexes.get(indexNum) * (float)Math.pow(param, j+1);
                 equationResult += (add);
-                System.out.print(add + " + ");
+             //   System.out.print(add + " + ");
                 indexNum++;
             }
         }
        // System.out.println("============================");
-        System.out.println("equation result = " + equationResult);
+        //System.out.println("equation result = " + equationResult);
     }
     private void setVelocities(){
         if(Rules.maxAllowedSpeed >= equationResult || Rules.maxAllowedSpeed == 0)
             paddle.setVelocity(new Utils.Vector2F(equationResult, 0));
+        else
+            this.onFail();
+    }
+    private void setAccelerations(){//dont use!
+        if(Rules.maxAllowedSpeed >= paddle.getVelocity().getX() || Rules.maxAllowedSpeed == 0)
+            paddle.accelerate(new Utils.Vector2F(equationResult, 0));
         else
             this.onFail();
     }
@@ -114,8 +120,8 @@ public class LearningIndividual {
         }
     }
     public void onFail(){
-        paddle.kill();
-        ball.kill();
+        paddle.hide();
+        ball.hide();
         active = false;
     }
     public Ball getBall(){

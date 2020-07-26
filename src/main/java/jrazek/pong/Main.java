@@ -20,5 +20,8 @@ public class Main {
         for(int i = 0; i < individualsPerRound; i++){
             map.addLearningIndividual(new LearningIndividual(polynomialDegree, map, indexesDomain));
         }
+        map.initRewardClass();
+        map.initGodClass();
+        frame.getGraphicsDraw().start();
     }
 }

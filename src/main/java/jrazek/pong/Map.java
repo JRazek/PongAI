@@ -23,8 +23,8 @@ public class Map extends DrawableObject {
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> paddles = new ArrayList<>();
     private List<Entity> balls = new ArrayList<>();
-    private RewardClass rewardClass = new RewardClass(this);
-    private GodClass godClass = new GodClass(this);
+    private RewardClass rewardClass;
+    private GodClass godClass;
     public Map(Utils.Vector2I size, Frame frame){
         super(frame, new myShape(new Rectangle2D.Float(0,0,size.getX() - 1, size.getY() - 1), Color.RED, false), new Utils.Vector2F(0,0), false);
         this.size = size;
@@ -61,7 +61,8 @@ public class Map extends DrawableObject {
             LearningIndividual li = learningIndividuals.get(i);
             if(li.isActive()) {
                 li.step();
-            }else totalInactive ++;
+            }
+            else totalInactive ++;
         }
 
         for (int i = 0;  i < entities.size(); i ++) {
@@ -82,7 +83,7 @@ public class Map extends DrawableObject {
             rewardClass.test(e.getLearningIndividual());
     }
     public void checkCollisions(Entity entity){
-        if(entity.isAlive()) {
+        if(entity.isVisible()) {
             if (entity.isColliding(this)) {
                 if (entity.getPos().getX() <= 0 || entity.getPos().getX() + entity.getShape().getShape().getBounds().getWidth() >= size.getX()) {
                     if (entity.isSolid())
@@ -92,7 +93,7 @@ public class Map extends DrawableObject {
                 }
                 if (entity.getPos().getY() <= 0) {
                     if (entity.isSolid())
-                        entity.onCollision(false);
+                        entity.setVelocity(new Utils.Vector2F(0, 0));
                     else
                         entity.onCollision(false);
                 }
@@ -129,9 +130,6 @@ public class Map extends DrawableObject {
         paddles.remove(e);
         entities.remove(e);
     }
-    public void setKilled(Entity e){
-        e.kill();
-    }
     public void addLearningIndividual(LearningIndividual li){
         learningIndividuals.add(li);
     }
@@ -140,6 +138,12 @@ public class Map extends DrawableObject {
     }
     public RewardClass getRewardClass() {
         return rewardClass;
+    }
+    public void initRewardClass(){
+        rewardClass = new RewardClass(this);
+    }
+    public void initGodClass(){
+        godClass = new GodClass(this);
     }
     public List<LearningIndividual> getLearningIndividuals() {
         return learningIndividuals;

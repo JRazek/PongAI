@@ -11,7 +11,7 @@ public class RewardClass {
     private Map<LearningIndividual, Integer> timesMeasured = new HashMap<>();
     private Map<LearningIndividual, Float> resultScore = new HashMap<>();
     public RewardClass(jrazek.pong.Map m){
-        System.out.println("Learning ind size = " + m.getLearningIndividuals().size());
+        System.out.println("Learning individuals size = " + m.getLearningIndividuals().size());
         for(LearningIndividual li : m.getLearningIndividuals()){
             totalScores.put(li, 0f);
             timesMeasured.put(li, 0);
