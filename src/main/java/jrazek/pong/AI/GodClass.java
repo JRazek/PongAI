@@ -26,7 +26,8 @@ public class GodClass {
     public void createNewGeneration(){
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
         generationsScores.add(learningIndividualListChart.getTotalScoreOfAll()/learningIndividualListChart.getClassifiedNumber());
-            if(generationsScores.size() > 1 && (minProgressDelta == 0 || ((generationsScores.get(generationsScores.size() - 2) / generationsScores.get(generationsScores.size() - 1)) * 10 > minProgressDelta ))){
+            if(generationsScores.size() > 1 && ((minProgressDelta == 0 ) || ((generationsScores.get(generationsScores.size() - 1) / generationsScores.get(generationsScores.size() - 2)) * 10 > minProgressDelta )) &&
+                    (mustBeGreater && (generationsScores.get(generationsScores.size() - 1) - generationsScores.get(generationsScores.size() - 2)) > 0)){
                 while (newGeneration.size() != Rules.individualsPerRound){
                     if(learningIndividualListChart.getClassifiedNumber() > 1) {
                         float rand1 = Utils.randomFloat(0, (float) rewardClass.getResultRewardsSum());
