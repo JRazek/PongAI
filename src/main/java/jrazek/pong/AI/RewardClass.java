@@ -23,8 +23,6 @@ public class RewardClass {
         System.out.println("Creating reward class...");
     }
     public void test(LearningIndividual li){
-        if(totalScores.get(li) == null)
-            System.out.println("KURwa");
         //System.out.println("testing...");
         float score = abs(1/(li.getBall().getPos().getX() - li.getPaddle().getPos().getX()));
 
@@ -42,10 +40,7 @@ public class RewardClass {
 
     public double getResultRewardsSum() {
         double sum = 0;
-        for (Map.Entry<LearningIndividual, Float> entry : resultScore.entrySet()) {
-            sum += entry.getValue();
-           // System.out.println(sum);
-        }
+        sum += map.getGodClass().getSumOfChartList();
         return sum;
     }
     public Map<LearningIndividual, Float> getResultScore() {

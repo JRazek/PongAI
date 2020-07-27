@@ -112,9 +112,11 @@ public class LearningIndividual {
     }
     private void mixIndexes(List<Float> i1, List<Float> i2){
         if(i1.size() == i2.size()){
+            indexes.clear();
             for(int i = 0; i < i1.size(); i ++){
                 indexes.add(Utils.randomBoolean() ? i1.get(i) : i2.get(i));
             }
+            System.out.println("Indexes size = " + indexes.size());
         }
     }
     public void onFail(){

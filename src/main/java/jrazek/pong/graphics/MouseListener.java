@@ -21,7 +21,7 @@ public class MouseListener implements java.awt.event.MouseListener {
             Main.paddle.accelerate(new Utils.Vector2F(1,0));
         }*/
         //System.out.println("MOUSE CLICKED - ");
-        //frame.getGraphicsDraw().start();
+        frame.getGraphicsDraw().start();
     }
 
     @Override

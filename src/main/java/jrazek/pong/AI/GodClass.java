@@ -19,22 +19,24 @@ public class GodClass {
     public void createNewGeneration(){
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
         while (newGeneration.size() != Rules.individualsPerRound){
-            System.out.println("Guessed max is... " + rewardClass.getResultRewardsSum());
+           // System.out.println("Guessed max is... " + rewardClass.getResultRewardsSum());
             Float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             Float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
             LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
-            if(parent1 != null && parent2 != null) {
+            System.out.println("And the parents are ..." + parent1 + " and " + parent1);
+            System.out.println("We are trying to access them with ..." + rand1 + " and " + rand2);
+            System.out.println("And the parents scores are ..." + rewardClass.getResultScore().get(parent1) + " and " + rewardClass.getResultScore().get(parent2));
+            if(parent1 != null && parent2 != null && !parent1.equals(parent2)) {
                 LearningIndividual child = new LearningIndividual(parent1, parent2);
                 if (Utils.randomFloat(0, 99) < Rules.mutationRate * 100) {
-                    child.mutate();
+                   // child.mutate();
                     System.out.println("Mutation");
                 }
                 newGeneration.add(child);
             }
             else{
                 System.out.println("ERROR!");
-                System.exit(1);
             }
             //System.out.println(parent1);
            // System.out.println("Our hero float is + " + rewardClass.getResultRewardsSum() + "!!!");
@@ -43,6 +45,9 @@ public class GodClass {
         }
         System.out.println("New generation size = " + newGeneration.size());
 
+    }
+    public Float getSumOfChartList(){
+        return learningIndividualListChart.getSum();
     }
     public List<LearningIndividual> getNewGeneration(){
         return newGeneration;

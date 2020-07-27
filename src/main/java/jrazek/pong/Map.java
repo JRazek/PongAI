@@ -178,4 +178,8 @@ public class Map extends DrawableObject {
     public List<LearningIndividual> getLearningIndividuals() {
         return learningIndividuals;
     }
+
+    public GodClass getGodClass() {
+        return godClass;
+    }
 }
