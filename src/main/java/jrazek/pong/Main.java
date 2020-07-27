@@ -17,9 +17,6 @@ public class Main {
     private static List<LearningIndividual> learningIndividualList = new ArrayList<>();
     public static void main(String []str){
         frame.setMap(map);
-        for(int i = 0; i < individualsPerRound; i++){
-            map.addLearningIndividual(new LearningIndividual(polynomialDegree, map, indexesDomain));
-        }
         map.initRewardClass();
         map.initGodClass();
         frame.getGraphicsDraw().start();

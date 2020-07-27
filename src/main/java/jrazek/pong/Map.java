@@ -48,10 +48,6 @@ public class Map extends DrawableObject {
     public boolean isColliding(DrawableObject po) {
         return false;
     }
-    public void reset(){
-        initRewardClass();
-        initGodClass();
-    }
     public Frame getFrame() {
         return frame;
     }
@@ -83,16 +79,18 @@ public class Map extends DrawableObject {
         }
     }
     public void newGeneration(){
-        frame.getGraphicsDraw().stop();//unstop on done initialising
-        frame.getGraphicsDraw().removeDrawables();
-        godClass.createNewGeneration();
-        this.setLearningIndividuals(godClass.getNewGeneration());
-        initRewardClass();
-        initGodClass();
-        frame.getGraphicsDraw().resetGenerationTicker();
-        generationNumber++;
-        System.out.println("Todays number is " + generationNumber);
-        frame.getGraphicsDraw().start();
+        if(Rules.destinyGeneration == 0 || Rules.destinyGeneration - 1 != generationNumber) {
+            frame.getGraphicsDraw().stop();//unstop on done initialising
+            frame.getGraphicsDraw().removeDrawables();
+            godClass.createNewGeneration();
+            this.setLearningIndividuals(godClass.getNewGeneration());
+            initRewardClass();
+            godClass.reset();
+            frame.getGraphicsDraw().resetGenerationTicker();
+            generationNumber++;
+            System.out.println("Todays number is " + generationNumber);
+            frame.getGraphicsDraw().start();
+        }
     }
     public void checkIfPassingPaddle(Entity e){
         Utils.Vector2F paddlePos = e.getLearningIndividual().getPaddle().getPos();

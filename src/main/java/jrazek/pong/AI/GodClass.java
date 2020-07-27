@@ -7,49 +7,74 @@ import jrazek.pong.Utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jrazek.pong.Rules.*;
+
 public class GodClass {
     private RewardClass rewardClass;
     private Map map;
-    private List<LearningIndividual> newGeneration = new ArrayList<>(Rules.individualsPerRound);
+    private List<LearningIndividual> newGeneration;
+    private List<Float> generationsScores = new ArrayList<>();//average of scores per generation
     private LearningIndividualListChart learningIndividualListChart;
     public GodClass(Map m){
-        this.rewardClass = m.getRewardClass();
         this.map = m;
+        this.reset();
+    }
+    public void reset(){
+        newGeneration = new ArrayList<>(Rules.individualsPerRound);
+        this.rewardClass = map.getRewardClass();
     }
     public void createNewGeneration(){
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
-        while (newGeneration.size() != Rules.individualsPerRound){
-           // System.out.println("Guessed max is... " + rewardClass.getResultRewardsSum());
-            float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
-            float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
-            LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
-            LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
-            if(parent1 != null && parent2 != null && !parent1.equals(parent2)) {
-                LearningIndividual child = new LearningIndividual(parent1, parent2);
-                System.out.println("And the parents are ..." + parent1 + " and " + parent2);
-                System.out.println("We are trying to access them with ..." + rand1 + " and " + rand2);
-                System.out.println("And the parents scores are ..." + rewardClass.getResultScore().get(parent1) + " and " + rewardClass.getResultScore().get(parent2));
-                if (Utils.randomFloat(0, 9999) < Rules.mutationRate * 1000) {
-                    child.mutate();
-                    System.out.println("Mutation");
+        generationsScores.add(learningIndividualListChart.getTotalScoreOfAll()/learningIndividualListChart.getClassifiedNumber());
+            if(generationsScores.size() > 1 && (minProgressDelta == 0 || ((generationsScores.get(generationsScores.size() - 2) / generationsScores.get(generationsScores.size() - 1)) * 10 > minProgressDelta ))){
+                while (newGeneration.size() != Rules.individualsPerRound){
+                    if(learningIndividualListChart.getClassifiedNumber() > 1) {
+                        float rand1 = Utils.randomFloat(0, (float) rewardClass.getResultRewardsSum());
+                        float rand2 = Utils.randomFloat(0, (float) rewardClass.getResultRewardsSum());
+                        LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
+                        LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
+                        if (parent1 != null && parent2 != null) {
+                            if (!parent1.equals(parent2)) {
+                                LearningIndividual child = new LearningIndividual(parent1, parent2);
+                                System.out.println("And the parents are ..." + parent1 + " and " + parent2);
+                                System.out.println("We are trying to access them with ..." + rand1 + " and " + rand2);
+                                System.out.println("And the parents scores are ..." + rewardClass.getResultScore().get(parent1) + " and " + rewardClass.getResultScore().get(parent2));
+                                if (Utils.randomFloat(0, 9999) < Rules.mutationRate * 1000) {
+                                    child.mutate();
+                                    System.out.println("Mutation");
+                                }
+                                newGeneration.add(child);
+                            }
+                        } else {
+                            System.out.println("ERROR!");
+                        }
+                    } else {
+                        System.out.println("NOT ENOUGH! CREATING A RANDOM");
+                        newGeneration.add(new LearningIndividual(polynomialDegree, map, indexesDomain));
+                    }
+                    //System.out.println(parent1);
+                    // System.out.println("Our hero float is + " + rewardClass.getResultRewardsSum() + "!!!");
+                    //kolo ruletka do losowania
+                    // Utils.randomDouble(0, rewardClass.getResultRewardsSum());
                 }
-                newGeneration.add(child);
+            }else{
+                initRandomGeneration();
+                System.out.println("New random generation size = " + newGeneration.size());
             }
-            else{
-                System.out.println("ERROR!");
-            }
-            //System.out.println(parent1);
-           // System.out.println("Our hero float is + " + rewardClass.getResultRewardsSum() + "!!!");
-            //kolo ruletka do losowania
-           // Utils.randomDouble(0, rewardClass.getResultRewardsSum());
-        }
-        System.out.println("New generation size = " + newGeneration.size());
+        //if(learningIndividualListChart.getTotalScoreOfAll()/learningIndividualListChart.getClassifiedNumber())
+        //have to store previous value
+
 
     }
     public Float getSumOfChartList(){
-        return learningIndividualListChart.getSum();
+        return learningIndividualListChart.getTotalScoreOfAll();
     }
     public List<LearningIndividual> getNewGeneration(){
         return newGeneration;
+    }
+    public void initRandomGeneration(){
+        for(int i = 0; i < individualsPerRound; i++){
+            newGeneration.add(new LearningIndividual(polynomialDegree, map, indexesDomain));
+        }
     }
 }

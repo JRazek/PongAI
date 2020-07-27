@@ -24,7 +24,10 @@ public class RewardClass {
     }
     public void test(LearningIndividual li){
         //System.out.println("testing...");
-        float score = abs(1/(li.getBall().getPos().getX() - li.getPaddle().getPos().getX()));
+        float score = 1;
+        float divider = abs(li.getBall().getPos().getX() - li.getPaddle().getPos().getX());
+        if(divider > 0)
+            score = score/divider;
 
         float total = totalScores.get(li);
 

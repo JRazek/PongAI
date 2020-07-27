@@ -20,19 +20,18 @@ public class LearningIndividualListChart {
         }
     }
     private List<Cell> cells;
-    float sum = 0;
+    private float totalScoreOfAll = 0;
     public LearningIndividualListChart(RewardClass rc){
         cells = new ArrayList<>(rc.getResultScore().size());
 
 //        System.out.println("Map size = " + rc.getResultScore().size());
         for (Map.Entry<LearningIndividual, Float> entry : rc.getResultScore().entrySet()) {
             if(entry.getValue() > 0) {
-                float tmp = sum;
-                cells.add(new Cell(entry.getKey(), sum, sum + entry.getValue()));
-                sum += entry.getValue();
+                float tmp = totalScoreOfAll;
+                cells.add(new Cell(entry.getKey(), totalScoreOfAll, totalScoreOfAll + entry.getValue()));
+                totalScoreOfAll += entry.getValue();
             }
         }
-       // System.out.println(cells.size() + " cells created");
     }
     public LearningIndividual getByScore(float score){
         System.out.println("Score were looking with is " + score);
@@ -44,8 +43,10 @@ public class LearningIndividualListChart {
         }
         return null;
     }
-
-    public float getSum() {
-        return sum;
+    public int getClassifiedNumber(){
+        return cells.size();
+    }
+    public float getTotalScoreOfAll() {
+        return totalScoreOfAll;
     }
 }

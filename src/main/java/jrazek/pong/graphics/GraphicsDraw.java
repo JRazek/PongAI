@@ -53,7 +53,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(5,this);
+        timer = new Timer(2,this);
         map.getFrame().addMouseListener(new MouseListener(map.getFrame(), map));
     }
 
@@ -69,9 +69,8 @@ public class GraphicsDraw extends JPanel implements ActionListener{
             map.step();
             ticks++;
             ticksOnCurrentGeneration++;
-           // System.out.println("tick tok");
             repaint();
-            if(ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration) {
+            if(ticksOnCurrentGeneration != 0 && ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration) {
                 map.newGeneration();
             }
         }
