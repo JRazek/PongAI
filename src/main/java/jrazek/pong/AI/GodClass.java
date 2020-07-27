@@ -20,17 +20,17 @@ public class GodClass {
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
         while (newGeneration.size() != Rules.individualsPerRound){
            // System.out.println("Guessed max is... " + rewardClass.getResultRewardsSum());
-            Float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
-            Float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
+            float rand1 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
+            float rand2 = Utils.randomFloat(0, (float)rewardClass.getResultRewardsSum());
             LearningIndividual parent1 = learningIndividualListChart.getByScore(rand1);
             LearningIndividual parent2 = learningIndividualListChart.getByScore(rand2);
-            System.out.println("And the parents are ..." + parent1 + " and " + parent1);
-            System.out.println("We are trying to access them with ..." + rand1 + " and " + rand2);
-            System.out.println("And the parents scores are ..." + rewardClass.getResultScore().get(parent1) + " and " + rewardClass.getResultScore().get(parent2));
             if(parent1 != null && parent2 != null && !parent1.equals(parent2)) {
                 LearningIndividual child = new LearningIndividual(parent1, parent2);
-                if (Utils.randomFloat(0, 99) < Rules.mutationRate * 100) {
-                   // child.mutate();
+                System.out.println("And the parents are ..." + parent1 + " and " + parent2);
+                System.out.println("We are trying to access them with ..." + rand1 + " and " + rand2);
+                System.out.println("And the parents scores are ..." + rewardClass.getResultScore().get(parent1) + " and " + rewardClass.getResultScore().get(parent2));
+                if (Utils.randomFloat(0, 9999) < Rules.mutationRate * 1000) {
+                    child.mutate();
                     System.out.println("Mutation");
                 }
                 newGeneration.add(child);

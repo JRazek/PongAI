@@ -37,7 +37,7 @@ public class LearningIndividualListChart {
     public LearningIndividual getByScore(float score){
         System.out.println("Score were looking with is " + score);
         for(Cell c : cells){
-            System.out.println("start - " + c.startValue + "  end - " + c.endValue);
+            //System.out.println("start - " + c.startValue + "  end - " + c.endValue);
             if(c.startValue <= score && c.endValue > score) {
                 return c.learningIndividual;
             }

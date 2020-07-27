@@ -53,7 +53,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(2,this);
+        timer = new Timer(5,this);
         map.getFrame().addMouseListener(new MouseListener(map.getFrame(), map));
     }
 
