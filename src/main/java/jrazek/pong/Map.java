@@ -81,7 +81,7 @@ public class Map extends DrawableObject {
     public void newGeneration(){
         if(Rules.destinyGeneration == 0 || Rules.destinyGeneration - 1 != generationNumber) {
             frame.getGraphicsDraw().stop();//unstop on done initialising
-            frame.getGraphicsDraw().removeDrawables();
+            frame.getGraphicsDraw().removeDrawables(this.getClass());
             godClass.createNewGeneration();
             this.setLearningIndividuals(godClass.getNewGeneration());
             initRewardClass();
@@ -175,6 +175,10 @@ public class Map extends DrawableObject {
     }
     public List<LearningIndividual> getLearningIndividuals() {
         return learningIndividuals;
+    }
+
+    public int getGenerationNumber() {
+        return generationNumber;
     }
 
     public GodClass getGodClass() {

@@ -25,9 +25,9 @@ public class RewardClass {
     public void test(LearningIndividual li){
         //System.out.println("testing...");
         float score = 1;
-        float divider = abs(li.getBall().getPos().getX() - li.getPaddle().getPos().getX());
-        if(divider > 0)
-            score = score/divider;
+        float divider = li.getBall().getPos().getX() - li.getPaddle().getPos().getX();
+        if(divider != 0)
+            score = abs(score/divider);
 
         float total = totalScores.get(li);
 
@@ -48,5 +48,17 @@ public class RewardClass {
     }
     public Map<LearningIndividual, Float> getResultScore() {
         return resultScore;
+    }
+
+    public LearningIndividual getBest(){
+        float max = 0;
+        LearningIndividual li = null;
+        for (Map.Entry<LearningIndividual, Float> entry : resultScore.entrySet()) {
+            if(entry.getValue() > max) {
+                max = entry.getValue();
+                li = entry.getKey();
+            }
+        }
+        return li;
     }
 }

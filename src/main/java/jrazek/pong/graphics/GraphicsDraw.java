@@ -63,6 +63,15 @@ public class GraphicsDraw extends JPanel implements ActionListener{
     public void removeDrawables(){
         drawableObjects.clear();
     }
+    public void removeDrawables(Class exceptFor){
+        for(int i = 0 ; i < drawableObjects.size(); i++){
+            DrawableObject o = drawableObjects.get(i);
+            if(!exceptFor.isInstance(o)) {
+                drawableObjects.remove(i);
+            }
+        }
+
+    }
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         if((actionEvent.getSource() instanceof Timer)) {
@@ -70,7 +79,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
             ticks++;
             ticksOnCurrentGeneration++;
             repaint();
-            if(ticksOnCurrentGeneration != 0 && ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration) {
+            if(ticksOnCurrentGeneration != 0 && (ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration && Rules.destinyGeneration != map.getGenerationNumber())) {
                 map.newGeneration();
             }
         }
