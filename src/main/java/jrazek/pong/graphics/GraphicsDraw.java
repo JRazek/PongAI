@@ -19,6 +19,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
     private int ticksOnCurrentGeneration = 0;
     private Map map;//only for incrementing step
     private List<DrawableObject> drawableObjects = new ArrayList<>();
+    private List<JLabel> texts = new ArrayList<>();
     boolean isLinux;
     GraphicsDraw(){
         if(System.getProperty("os.name").equalsIgnoreCase("linux"))
@@ -42,6 +43,9 @@ public class GraphicsDraw extends JPanel implements ActionListener{
             else {
                 g2D.draw(s.getShape());
             }
+        }
+        for(int i = 0 ; i < texts.size(); i ++){
+            super.add(texts.get(i));
         }
     }
     public void addDrawable(DrawableObject o){
@@ -98,6 +102,9 @@ public class GraphicsDraw extends JPanel implements ActionListener{
     }
     public void stop(){
         timer.stop();
+    }
+    public void addText(JLabel t){
+        texts.add(t);
     }
     public void resetGenerationTicker(){
         ticksOnCurrentGeneration = 0;

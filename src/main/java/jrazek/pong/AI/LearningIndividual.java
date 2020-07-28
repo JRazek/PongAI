@@ -30,14 +30,14 @@ public class LearningIndividual {
         this.indexesDomain = dm;
         this.active = true;
         this.color = new Color((int)(Math.random() * 0x1000000));
-        this.paddle = new Paddle(new Utils.Vector2F(200, 10), new Utils.Vector2F(Utils.randomFloat(0,800), 900), map, map.getFrame(), this);
+        this.paddle = new Paddle(Rules.paddleSize, new Utils.Vector2F(Rules.mapSize.getX()-Rules.paddleSize.getX(), 900), map, map.getFrame(), this);
         this.collisionGroup = new CollisionGroup();
         this.paddle.setCollisionGroup(collisionGroup);
         this.paddle.getShape().setColor(color);
-        this.ball = new Ball(60, new Utils.Vector2F(Utils.randomFloat(0,800), Utils.randomFloat(0,800)), map, map.getFrame(), this);
+        this.ball = new Ball(Rules.ballSize, new Utils.Vector2F(Utils.randomFloat(0,Rules.mapSize.getX()-Rules.ballSize), Utils.randomFloat(0,Rules.mapSize.getY()/2)), map, map.getFrame(), this);
         this.ball.setCollisionGroup(collisionGroup);
         this.ball.getShape().setColor(color);
-        ball.setVelocity(new Utils.Vector2F(Utils.randomFloat(2,4), -Utils.randomFloat(4,10)));
+        ball.setVelocity(new Utils.Vector2F(Utils.randomFloat(-4,4), -Utils.randomFloat(4,10)));
         this.params = new ArrayList<>();
         this.indexes = new ArrayList<>();
         updateParams();
