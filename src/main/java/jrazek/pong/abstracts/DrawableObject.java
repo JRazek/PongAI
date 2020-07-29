@@ -5,7 +5,6 @@ import jrazek.pong.Utils.Utils;
 import jrazek.pong.graphics.Frame;
 import jrazek.pong.graphics.myShape;
 
-//abstract object with no specified position
 public abstract class DrawableObject {
     private Utils.Vector2F pos;
     private Frame frame;
