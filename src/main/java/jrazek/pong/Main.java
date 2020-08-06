@@ -3,6 +3,7 @@ package jrazek.pong;
 import jrazek.pong.AI.LearningIndividual;
 import jrazek.pong.Utils.Utils;
 import jrazek.pong.graphics.Frame;
+import jrazek.pong.graphics.Text;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -14,9 +15,10 @@ public class Main {
     private static List<LearningIndividual> learningIndividualList = new ArrayList<>();
     public static void main(String []str){
         frame.setMap(map);
-        frame.getGraphicsDraw().addText(new JLabel("Text todo"));
         map.initRewardClass();
         map.initGodClass();
+        frame.getGraphicsDraw().addText(new Text(map, 0));
+        frame.getGraphicsDraw().addText(new Text(map, 1));
         frame.getGraphicsDraw().start();
     }
 }

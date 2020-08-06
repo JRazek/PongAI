@@ -15,6 +15,7 @@ public class GodClass {
     private List<LearningIndividual> newGeneration;
     private List<Float> generationsScores = new ArrayList<>();//average of scores per generation
     private LearningIndividualListChart learningIndividualListChart;
+    private int okInTheRow = 0;
     public GodClass(Map m){
         this.map = m;
         this.reset();
@@ -22,6 +23,7 @@ public class GodClass {
     public void reset(){
         newGeneration = new ArrayList<>(Rules.individualsPerRound);
         this.rewardClass = map.getRewardClass();
+        map.getFrame().getGraphicsDraw().updateTexts();
     }
     public void createNewGeneration(){
         learningIndividualListChart = new LearningIndividualListChart(rewardClass);
@@ -36,12 +38,14 @@ public class GodClass {
             if (generationsScores.get(generationsScores.size() - checkFrequency) != null)
                 prevAVG = generationsScores.get(generationsScores.size() - checkFrequency);
         }
-        if((minDelta != 0 && checkFrequency != 0 && ((currAVG/(currAVG - prevAVG))*100 < minDelta) && checkTime) ||
-                generationsScores.size() == 1){
+        if(minDelta != -1 && (minDelta != 0 && checkFrequency != 0 && ((currAVG/(currAVG - prevAVG))*100 < minDelta) && checkTime) ||
+                generationsScores.size() == 1 && !(minDelta == 0 && currAVG - prevAVG > 0)){
             initRandomGeneration();
             System.out.println("New random generation size = " + newGeneration.size());
+            okInTheRow = 0;
         }
         else{
+            okInTheRow++;
             while (newGeneration.size() != Rules.individualsPerRound){
                 if(learningIndividualListChart.getClassifiedNumber() > 1) {
                     float rand1 = Utils.randomFloat(0, (float) rewardClass.getResultRewardsSum());
@@ -88,5 +92,9 @@ public class GodClass {
         for(int i = 0; i < individualsPerRandomRound; i++){
             newGeneration.add(new LearningIndividual(polynomialDegree, map, indexesDomain));
         }
+    }
+
+    public int getOkInTheRow() {
+        return okInTheRow;
     }
 }
