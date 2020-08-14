@@ -19,5 +19,7 @@ public class Rules {
     public static final int checkFrequency = 1; //how frequent the min Delta should be checked (generations)
     //===============================
 
+    public static boolean showTime = true;
+    public static int fps = 1000;
     public static final Utils.Domain indexesDomain = new Utils.Domain(-0.0001f, 0.0001f);
 }

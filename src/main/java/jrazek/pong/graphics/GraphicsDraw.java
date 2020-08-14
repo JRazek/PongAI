@@ -15,6 +15,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     private Timer timer;
     private int ticks = 0;
+    private int seconds = 0;
     private int ticksOnCurrentGeneration = 0;
     private Map map;//only for incrementing step
     private List<DrawableObject> drawableObjects = new ArrayList<>();
@@ -56,7 +57,7 @@ public class GraphicsDraw extends JPanel implements ActionListener{
 
     public void setMap(Map map) {
         this.map = map;
-        timer = new Timer(1,this);
+        timer = new Timer(1000/Rules.fps,this);
         map.getFrame().addMouseListener(new MouseListener(map.getFrame(), map));
     }
 
@@ -80,6 +81,11 @@ public class GraphicsDraw extends JPanel implements ActionListener{
         if((actionEvent.getSource() instanceof Timer)) {
             map.step();
             ticks++;
+            if(ticks % Rules.fps == 0){
+                seconds ++;
+                if(Rules.showTime)
+                    System.out.println(seconds + " seconds.");
+            }
             ticksOnCurrentGeneration++;
             repaint();
             if(ticksOnCurrentGeneration != 0 && (ticksOnCurrentGeneration >= Rules.maxTicksPerGeneration && Rules.destinyGeneration != map.getGenerationNumber())) {

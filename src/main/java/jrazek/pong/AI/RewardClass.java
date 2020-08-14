@@ -15,6 +15,7 @@ public class RewardClass {
     public RewardClass(jrazek.pong.Map m){
         this.map = m;
         //System.out.println("Learning individuals size = " + m.getLearningIndividuals().size());
+        //d
         for(LearningIndividual li : m.getLearningIndividuals()){
             totalScores.put(li, 0f);
             timesMeasured.put(li, 0);
